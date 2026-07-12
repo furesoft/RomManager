@@ -1,32 +1,28 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
-using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using Prism.DryIoc;
-using Prism.Ioc;
 using RomManager.ViewModels;
 using RomManager.Views;
 
 namespace RomManager;
 
-public partial class App : PrismApplication
+public partial class App : Application
 {
     public override void Initialize()
     {
-        AvaloniaXamlLoader.Load(this);
-
-        // Required when overriding Initialize
-        base.Initialize();
+        AvaloniaXamlLoader.Load(this); // required
     }
 
-    protected override AvaloniaObject CreateShell()
+    public override void OnFrameworkInitializationCompleted()
     {
-        return Container.Resolve<MainWindow>();
-    }
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.MainWindow = new MainWindow
+            {
+                DataContext = new MainWindowViewModel(),
+            };
+        }
 
-    protected override void RegisterTypes(IContainerRegistry containerRegistry)
-    {
-        // Register you Services, Views, Dialogs, etc.
+        base.OnFrameworkInitializationCompleted();
     }
 }

@@ -1,0 +1,25 @@
+﻿<PleasantWindow xmlns="https://github.com/avaloniaui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:vm="using:RomManager.ViewModels"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                x:Class="RomManager.Views.MainWindow" Title="Rom Manager"
+                x:DataType="vm:MainWindowViewModel" WindowStartupLocation="CenterScreen"
+                Icon="/Assets/logo.ico">
+
+    <PleasantView>
+        <NavigationView x:Name="MainNavigationView" AlwaysOpen="True" IsOpen="True" ShowBackButton="True">
+            <NavigationViewItem Header="Home"
+                                Icon="{x:Static MaterialIcons.ViewDashboard}">
+                <NavigationViewItem.Content>
+                    <DashboardCard Header="Header">
+                        <DashboardCard.Subtitle>Hello World</DashboardCard.Subtitle>
+                    </DashboardCard>
+                </NavigationViewItem.Content>
+            </NavigationViewItem>
+        </NavigationView>
+
+    </PleasantView>
+
+</PleasantWindow>

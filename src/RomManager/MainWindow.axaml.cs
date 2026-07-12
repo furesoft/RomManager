@@ -1,12 +1,14 @@
 using Avalonia.Controls;
+using PleasantUI.Controls;
 
 namespace RomManager.Views;
 
-/// <summary>Main window view.</summary>
-public partial class MainWindow : Window
+public partial class MainWindow : PleasantWindow
 {
     public MainWindow()
     {
+        SplashScreen = new SplashScreen();
+
         InitializeComponent();
     }
 }
