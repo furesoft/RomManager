@@ -1,0 +1,32 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Margin="15"
+             x:Class="RomManager.Pages.SettingsPage">
+    <ScrollViewer>
+        <StackPanel Spacing="5">
+            <OptionsDisplayItem Header="Paths" IsExpanded="True" Padding="15" Expands="True">
+                <OptionsDisplayItem.ActionButton>
+                    <PathPicker Mode="OpenFolder" />
+                </OptionsDisplayItem.ActionButton>
+
+                <OptionsDisplayItem.Content>
+                    <StackPanel Spacing="15">
+                        <OptionsDisplayItem Header="Roms Path">
+                            <OptionsDisplayItem.ActionButton>
+                                <PathPicker Mode="OpenFolder" />
+                            </OptionsDisplayItem.ActionButton>
+                        </OptionsDisplayItem>
+
+                        <OptionsDisplayItem Header="SaveGame Path">
+                            <OptionsDisplayItem.ActionButton>
+                                <PathPicker Mode="OpenFolder" />
+                            </OptionsDisplayItem.ActionButton>
+                        </OptionsDisplayItem>
+                    </StackPanel>
+                </OptionsDisplayItem.Content>
+            </OptionsDisplayItem>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

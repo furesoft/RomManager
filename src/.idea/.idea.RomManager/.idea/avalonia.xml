@@ -5,6 +5,9 @@
       <map>
         <entry key="RomManager/App.axaml" value="RomManager/RomManager.csproj" />
         <entry key="RomManager/MainWindow.axaml" value="RomManager/RomManager.csproj" />
+        <entry key="RomManager/Pages/HomePage.axaml" value="RomManager/RomManager.csproj" />
+        <entry key="RomManager/Pages/LibraryPage.axaml" value="RomManager/RomManager.csproj" />
+        <entry key="RomManager/Pages/SettingsPage.axaml" value="RomManager/RomManager.csproj" />
       </map>
     </option>
   </component>

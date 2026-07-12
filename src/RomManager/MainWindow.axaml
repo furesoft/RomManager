@@ -3,19 +3,32 @@
                 xmlns:vm="using:RomManager.ViewModels"
                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:pages="clr-namespace:RomManager.Pages"
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                x:Class="RomManager.Views.MainWindow" Title="Rom Manager"
+                x:Class="RomManager.Views.MainWindow" Title="Rom Manager" ExtendsContentIntoTitleBar="True"
                 x:DataType="vm:MainWindowViewModel" WindowStartupLocation="CenterScreen"
                 Icon="/Assets/logo.ico">
-
     <PleasantView>
-        <NavigationView x:Name="MainNavigationView" AlwaysOpen="True" IsOpen="True" ShowBackButton="True">
+        <NavigationView x:Name="MainNavigationView" AlwaysOpen="True" IsOpen="True">
             <NavigationViewItem Header="Home"
                                 Icon="{x:Static MaterialIcons.ViewDashboard}">
                 <NavigationViewItem.Content>
-                    <DashboardCard Header="Header">
-                        <DashboardCard.Subtitle>Hello World</DashboardCard.Subtitle>
-                    </DashboardCard>
+                    <pages:HomePage />
+                </NavigationViewItem.Content>
+            </NavigationViewItem>
+
+            <NavigationViewItem Header="Library"
+                                Icon="{x:Static MaterialIcons.Library}">
+                <NavigationViewItem.Content>
+                    <pages:LibraryPage />
+                </NavigationViewItem.Content>
+            </NavigationViewItem>
+
+
+            <NavigationViewItem Header="Settings" DockPanel.Dock="Bottom"
+                                Icon="{x:Static MaterialIcons.CogOutline}">
+                <NavigationViewItem.Content>
+                    <pages:SettingsPage />
                 </NavigationViewItem.Content>
             </NavigationViewItem>
         </NavigationView>
