@@ -5,7 +5,7 @@
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:pages="clr-namespace:RomManager.Pages"
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                x:Class="RomManager.Views.MainWindow" Title="Rom Manager" ExtendsContentIntoTitleBar="True"
+                x:Class="RomManager.MainWindow" Title="Rom Manager" ExtendsContentIntoTitleBar="True"
                 x:DataType="vm:MainWindowViewModel" WindowStartupLocation="CenterScreen"
                 Icon="/Assets/logo.ico">
     <PleasantView>

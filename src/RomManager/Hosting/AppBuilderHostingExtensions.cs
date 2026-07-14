@@ -1,13 +1,11 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RomManager.Configurations;
 using RomManager.Core;
 using RomManager.ViewModels;
-using RomManager.Views;
 
 namespace RomManager.Hosting;
 

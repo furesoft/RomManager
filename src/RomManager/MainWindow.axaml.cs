@@ -1,8 +1,7 @@
-using Avalonia.Controls;
 using PleasantUI.Controls;
 using RomManager.ViewModels;
 
-namespace RomManager.Views;
+namespace RomManager;
 
 public partial class MainWindow : PleasantWindow
 {
