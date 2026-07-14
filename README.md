@@ -1,10 +1,11 @@
 
 # RomManager
 
-A versatile tool to help organizing roms.
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![CodeFactor](https://www.codefactor.io/repository/github/furesoft/rommanager/badge)](https://www.codefactor.io/repository/github/furesoft/rommanager)
+
+A versatile tool to help organizing roms.
 
 ## Features
 
