@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RomManager.Configurations;
+using RomManager.Core;
 using RomManager.ViewModels;
 using RomManager.Views;
 
@@ -30,6 +31,8 @@ public static class AppBuilderHostingExtensions
         hostBuilder.Services.AddSingleton<MainWindow>();
         hostBuilder.Services.AddSingleton<MainWindowViewModel>();
         hostBuilder.Services.AddTransient<SettingsPageViewModel>();
+
+        hostBuilder.Services.AddSingleton<IStartupInitializer, UpdateInitializer>();
 
         configureHost?.Invoke(hostBuilder);
 

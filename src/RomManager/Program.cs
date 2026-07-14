@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using Avalonia;
 using RomManager.Hosting;
+using Velopack;
 
 namespace RomManager;
 
@@ -13,7 +14,7 @@ internal sealed class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        if (args.Length == 1 && args[0] == "--version")
+        if (args is ["--version"])
         {
             var gitVersionInformationType = Assembly.GetEntryAssembly()!.GetType("GitVersionInformation");
             var field = gitVersionInformationType!.GetField("MajorMinorPatch");
@@ -21,6 +22,10 @@ internal sealed class Program
             Console.WriteLine(field!.GetValue(null));
             return;
         }
+
+        VelopackApp
+            .Build()
+            .Run();
 
         BuildAvaloniaApp(args)
             .StartWithClassicDesktopLifetime(args);
