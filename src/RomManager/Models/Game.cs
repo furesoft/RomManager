@@ -9,5 +9,5 @@ public partial class Game : ObservableObject
     private string _name = "";
 
     [ObservableProperty]
-    private ObservableCollection<IHasPath> _files = [];
+    private ObservableCollection<IFilename> _files = [];
 }

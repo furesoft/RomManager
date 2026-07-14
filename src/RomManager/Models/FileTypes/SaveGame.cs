@@ -1,6 +1,6 @@
 ﻿namespace RomManager.Models.FileTypes;
 
-public class SaveGame : IHasPath
+public class SaveGame : IFilename
 {
-    public string Path { get; set; }
+    public string Filename { get; set; }
 }

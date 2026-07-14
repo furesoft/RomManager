@@ -1,6 +1,6 @@
 ﻿namespace RomManager.Models.FileTypes;
 
-public class RomFile : IHasPath
+public class RomFile : IFilename
 {
-    public string Path { get; set; }
+    public string Filename { get; set; }
 }
