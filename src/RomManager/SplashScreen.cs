@@ -13,7 +13,7 @@ namespace RomManager;
 public class SplashScreen : IPleasantSplashScreen
 {
     public IBrush? Background { get; } = new SolidColorBrush(Color.Parse("#2D2D2D"));
-    public int MinimumShowTime { get; } = 1000;
+    public int MinimumShowTime { get; } = 4000;
     public IImage? AppIcon { get; }
     public string? AppName { get; } = "Rom Manager";
 
@@ -42,5 +42,6 @@ public class SplashScreen : IPleasantSplashScreen
         }
 
         reporter.Report(100);
+        _infoText.Text = "Loading ...";
     }
 }
