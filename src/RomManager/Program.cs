@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Avalonia;
 using RomManager.Hosting;
 
@@ -10,8 +11,20 @@ internal sealed class Program
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
     // yet and stuff might break.
     [STAThread]
-    public static void Main(string[] args) => BuildAvaloniaApp(args)
-        .StartWithClassicDesktopLifetime(args);
+    public static void Main(string[] args)
+    {
+        if (args.Length == 1 && args[0] == "--version")
+        {
+            var gitVersionInformationType = Assembly.GetEntryAssembly()!.GetType("GitVersionInformation");
+            var field = gitVersionInformationType!.GetField("MajorMinorPatch");
+
+            Console.WriteLine(field!.GetValue(null));
+            return;
+        }
+
+        BuildAvaloniaApp(args)
+            .StartWithClassicDesktopLifetime(args);
+    }
 
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp(string[]? args = null) => AppBuilder
