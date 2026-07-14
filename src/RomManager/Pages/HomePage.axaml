@@ -1,12 +1,63 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
+<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:RomManager.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Margin="15"
-             x:Class="RomManager.Pages.HomePage">
-    <DashboardCard Header="Header">
-        <DashboardCard.Subtitle>Hello World</DashboardCard.Subtitle>
+             x:Class="RomManager.Pages.HomePage"
+             x:CompileBindings="True"
+             x:DataType="vm:HomePageViewModel">
+    <ScrollViewer>
+        <StackPanel Spacing="16">
+            <StackPanel Spacing="4">
+                <TextBlock Text="Dashboard" FontSize="28" FontWeight="SemiBold" />
+                <TextBlock Text="{Binding AppVersion, StringFormat=RomManager {0}}" Opacity="0.7" />
+            </StackPanel>
 
-        <TextBlock Text="Hello World"></TextBlock>
-    </DashboardCard>
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                <DashboardCard Grid.Row="0" Grid.Column="0"
+                               Header="Gesamtbibliothek"
+                               Subtitle="{Binding LibraryStateText}">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="{Binding KnownFileCountText}" FontSize="28" FontWeight="SemiBold" />
+                        <TextBlock Text="Dateien in den konfigurierten ROM- und Savegame-Pfaden." TextWrapping="Wrap" Opacity="0.75" />
+                        <StackPanel Spacing="3">
+                            <TextBlock Text="{Binding RomsSummary.FileCountText}" />
+                            <TextBlock Text="{Binding SaveGamesSummary.FileCountText}" />
+                        </StackPanel>
+                    </StackPanel>
+                </DashboardCard>
+
+                <DashboardCard Grid.Row="0" Grid.Column="1"
+                               Header="Pfad-Setup"
+                               Subtitle="{Binding SetupCoverageText}">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="{Binding ConfiguredFolderText}" FontSize="24" FontWeight="SemiBold" />
+                        <TextBlock Text="{Binding BasePathSummary.PathText}" TextWrapping="Wrap" Opacity="0.75" />
+                        <TextBlock Text="{Binding BasePathSummary.StatusText}" />
+                    </StackPanel>
+                </DashboardCard>
+
+                <DashboardCard Grid.Row="1" Grid.Column="0"
+                               Header="ROMs"
+                               Subtitle="{Binding RomsSummary.StatusText}">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="{Binding RomsSummary.FileCountText}" FontSize="24" FontWeight="SemiBold" />
+                        <TextBlock Text="{Binding RomsSummary.PathText}" TextWrapping="Wrap" Opacity="0.75" />
+                        <TextBlock Text="Erkannte Dateien im ROM-Verzeichnis." Opacity="0.75" />
+                    </StackPanel>
+                </DashboardCard>
+
+                <DashboardCard Grid.Row="1" Grid.Column="1"
+                               Header="Savegames"
+                               Subtitle="{Binding SaveGamesSummary.StatusText}">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="{Binding SaveGamesSummary.FileCountText}" FontSize="24" FontWeight="SemiBold" />
+                        <TextBlock Text="{Binding SaveGamesSummary.PathText}" TextWrapping="Wrap" Opacity="0.75" />
+                        <TextBlock Text="Erkannte Dateien im Savegame-Verzeichnis." Opacity="0.75" />
+                    </StackPanel>
+                </DashboardCard>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

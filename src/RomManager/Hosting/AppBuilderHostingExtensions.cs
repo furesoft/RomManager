@@ -30,6 +30,7 @@ public static class AppBuilderHostingExtensions
 
         hostBuilder.Services.AddSingleton<MainWindow>();
         hostBuilder.Services.AddSingleton<MainWindowViewModel>();
+        hostBuilder.Services.AddSingleton<HomePageViewModel>();
         hostBuilder.Services.AddTransient<SettingsPageViewModel>();
 
         hostBuilder.Services.AddSingleton<IStartupInitializer, UpdateInitializer>();

@@ -1,4 +1,7 @@
-﻿using Avalonia.Controls;
+using Avalonia;
+using Avalonia.Controls;
+using Microsoft.Extensions.DependencyInjection;
+using RomManager.Hosting;
 
 namespace RomManager.Pages;
 
@@ -8,6 +11,11 @@ public partial class HomePage : UserControl
     {
         InitializeComponent();
 
-        DataContext = new ViewModels.HomePageViewModel();
+        if (Design.IsDesignMode)
+        {
+            return;
+        }
+
+        DataContext = AppHost.Services.GetRequiredService<ViewModels.HomePageViewModel>();
     }
 }
