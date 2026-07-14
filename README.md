@@ -25,6 +25,10 @@ A versatile tool to help organizing roms.
 
 For support, join our [discord](https://discord.gg/wpwGVBbG4R)
 
+## Attribution
+
+Retro Icons by [KyleBing/retro-game-console-icons](https://github.com/KyleBing/retro-game-console-icons)
+
 ## Contributing
 
 Contributions are always welcome!
