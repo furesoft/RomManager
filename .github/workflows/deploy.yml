@@ -1,0 +1,78 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install GitVersion
+        run: dotnet tool install --global GitVersion.Tool --version 6.5.1
+
+      - name: Calculate Version
+        id: version
+        run: |
+          $version = dotnet-gitversion /output json | ConvertFrom-Json | Select-Object -ExpandProperty MajorMinorPatch
+          echo "version=$version" >> $env:GITHUB_OUTPUT
+          echo "GITVERSION_MAJORMINORPATCH=$version" >> $env:GITHUB_ENV
+
+      - name: Clean
+        run: |
+          Remove-Item -Path ".\release" -Recurse -Force -ErrorAction SilentlyContinue
+          Remove-Item -Path ".\publish-win" -Recurse -Force -ErrorAction SilentlyContinue
+          Remove-Item -Path ".\publish-linux" -Recurse -Force -ErrorAction SilentlyContinue
+
+      - name: Build
+        run: dotnet build src/RomManager/RomManager.csproj --configuration Release
+
+      - name: Publish Windows (win-x64)
+        run: dotnet publish src/RomManager/RomManager.csproj --configuration Release --runtime win-x64 --no-self-contained --output ./publish-win
+
+      - name: Publish Linux (linux-x64)
+        run: dotnet publish src/RomManager/RomManager.csproj --configuration Release --runtime linux-x64 --no-self-contained --output ./publish-linux
+
+      - name: Install Velopack
+        run: dotnet tool install --global vpk --version 0.0.1298
+
+      - name: Download Old Windows Release
+        run: |
+          $cmd = "[win] download github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} -o ./release"
+          vpk $cmd
+
+      - name: Download Old Linux Release
+        run: |
+          $cmd = "[linux] download github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} -o ./release"
+          vpk $cmd
+
+      - name: Velopack Pack Windows
+        run: |
+          $cmd = "[win] pack --packVersion ${{ steps.version.outputs.version }} -u Furesoft_RomManager --packTitle 'Rom Manager' -p ./publish-win --mainExe ./publish-win/RomManager.exe"
+          vpk $cmd
+
+      - name: Velopack Pack Linux
+        run: |
+          $cmd = "[linux] pack --packVersion ${{ steps.version.outputs.version }} -u Furesoft_RomManager --packTitle 'Rom Manager' -p ./publish-linux --mainExe ./publish-linux/RomManager"
+          vpk $cmd
+
+      - name: Velopack Upload Windows
+        run: |
+          $cmd = "upload github --channel win --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} --releaseName '${{ steps.version.outputs.version }}' --tag v${{ steps.version.outputs.version }} --merge"
+          vpk $cmd
+
+      - name: Velopack Upload Linux
+        run: |
+          $cmd = "upload github --channel linux --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} --releaseName '${{ steps.version.outputs.version }}' --tag v${{ steps.version.outputs.version }} --merge"
+          vpk $cmd
