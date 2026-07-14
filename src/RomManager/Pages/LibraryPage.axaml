@@ -3,7 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:PleasantUI.Controls;assembly=PleasantUI"
+             xmlns:viewModels="clr-namespace:RomManager.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Margin="15"
+             x:DataType="viewModels:LibraryPageViewModel"
              x:Class="RomManager.Pages.LibraryPage">
     <StackPanel Spacing="5">
         <controls:CommandBar DefaultLabelPosition="Bottom"
@@ -17,5 +19,19 @@
             <controls:CommandBarButton Label="Find Duplicates"
                                        Icon="{DynamicResource EditRegular}" />
         </controls:CommandBar>
+
+        <ListBox ItemsSource="{Binding Games}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </StackPanel>
 </UserControl>
