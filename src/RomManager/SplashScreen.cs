@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media;
@@ -26,5 +26,4 @@ public class SplashScreen : IPleasantSplashScreen
     {
         await Task.Delay(5000, cancellationToken);
     }
-
 }
