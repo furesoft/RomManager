@@ -29,8 +29,6 @@ internal sealed class Program
             VelopackApp
                 .Build()
                 .Run();
-
-            return;
         }
 
         BuildAvaloniaApp(args)
