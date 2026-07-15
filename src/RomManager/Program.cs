@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using Avalonia;
+using Avalonia.Controls;
 using RomManager.Hosting;
 using Velopack;
 
@@ -23,9 +24,14 @@ internal sealed class Program
             return;
         }
 
-        VelopackApp
-            .Build()
-            .Run();
+        if (!Design.IsDesignMode)
+        {
+            VelopackApp
+                .Build()
+                .Run();
+
+            return;
+        }
 
         BuildAvaloniaApp(args)
             .StartWithClassicDesktopLifetime(args);
