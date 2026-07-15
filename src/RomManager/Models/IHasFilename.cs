@@ -1,6 +1,6 @@
 ﻿namespace RomManager.Models;
 
-public interface IFilename
+public interface IHasFilename
 {
     public string Filename { get; set; }
 }

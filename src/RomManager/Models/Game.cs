@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace RomManager.Models;
@@ -9,5 +10,5 @@ public partial class Game : ObservableObject
     private string _name = "";
 
     [ObservableProperty]
-    private ObservableCollection<IFilename> _files = [];
+    private IEnumerable<IHasFilename> _files = [];
 }
