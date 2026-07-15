@@ -1,4 +1,4 @@
-﻿using Avalonia.Controls;
+using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using RomManager.Hosting;
 using RomManager.ViewModels;
@@ -9,7 +9,6 @@ public partial class LibraryPage : UserControl
 {
     public LibraryPage() : this(AppHost.Services.GetRequiredService<LibraryPageViewModel>())
     {
-
     }
     public LibraryPage(LibraryPageViewModel viewModel)
     {
