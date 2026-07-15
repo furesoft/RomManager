@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Options;
 using RomManager.Configurations;
 using RomManager.Models;
-using RomManager.Models.FileTypes;
 using RomManager.Systems;
 
 namespace RomManager.ViewModels;

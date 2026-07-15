@@ -29,7 +29,9 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}" />
+                    <DashboardCard Header="{Binding Name}">
+
+                    </DashboardCard>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
