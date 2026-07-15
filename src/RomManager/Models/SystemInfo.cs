@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using RomManager.Configurations;
 using RomManager.Models.FileTypes;
 
@@ -36,14 +38,45 @@ public abstract class SystemInfo
             select new Game
         {
             Name = System.IO.Path.GetFileNameWithoutExtension(file),
-            Files = [
-                new RomFile
-                {
-                    Filename = file
-                }
-            ]
+            Files = GetFiles(pathsConfiguration, file).ToArray()
         };
 
         return games.ToList();
+    }
+
+    private IEnumerable<IHasFilename> GetFiles(PathsConfiguration pathsConfiguration, string romFilename)
+    {
+       yield return new RomFile { Filename = romFilename };
+
+       var name = System.IO.Path.GetFileNameWithoutExtension(romFilename);
+       var mediaPath = System.IO.Path.Combine(pathsConfiguration.BasePath, pathsConfiguration.Media, Path, "covers");
+       if (!Directory.Exists(mediaPath))
+       {
+           yield break;
+       }
+
+       var coverArt = Directory.EnumerateFiles(mediaPath, $"{name}.*", SearchOption.AllDirectories).FirstOrDefault();
+       if (coverArt is null)
+       {
+           var normalizedName = NormalizeTitle(name);
+           coverArt = Directory.EnumerateFiles(mediaPath, "*", SearchOption.AllDirectories)
+               .FirstOrDefault(file => NormalizeTitle(System.IO.Path.GetFileNameWithoutExtension(file)) == normalizedName);
+       }
+
+       if (coverArt is not null) yield return new CoverArtImage { Filename = coverArt };
+    }
+
+    private static string NormalizeTitle(string title)
+    {
+        var result = new StringBuilder(title.Length);
+        foreach (var character in title)
+        {
+            if (char.IsLetterOrDigit(character))
+            {
+                result.Append(char.ToLowerInvariant(character));
+            }
+        }
+
+        return result.ToString();
     }
 }

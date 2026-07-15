@@ -3,15 +3,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:PleasantUI.Controls;assembly=PleasantUI"
+             xmlns:models="clr-namespace:RomManager.Models"
              xmlns:viewModels="clr-namespace:RomManager.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Margin="15"
              x:DataType="viewModels:LibraryPageViewModel"
              x:Class="RomManager.Pages.LibraryPage">
-    <StackPanel Spacing="5">
+    <Grid RowDefinitions="Auto,*" RowSpacing="8">
         <controls:CommandBar DefaultLabelPosition="Bottom"
-                             IsOpen="True"
+                             IsOpen="False"
                              IsSticky="True"
-                             OverflowButtonVisibility="Collapsed">
+                             OverflowButtonVisibility="Auto">
             <controls:CommandBarButton Label="Scan"
                                        Icon="{DynamicResource CubeScan}" />
             <controls:CommandBarButton Label="Import"
@@ -20,7 +21,10 @@
                                        Icon="{DynamicResource EditRegular}" />
         </controls:CommandBar>
 
-        <ListBox ItemsSource="{Binding Games}">
+        <ListBox Grid.Row="1"
+                 ItemsSource="{Binding Games}"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
@@ -28,12 +32,10 @@
             </ListBox.ItemsPanel>
 
             <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DashboardCard Header="{Binding Name}">
-
-                    </DashboardCard>
+                <DataTemplate x:DataType="models:Game">
+                    <Image Source="{Binding CoverArt}" Width="100" Height="150" Stretch="UniformToFill" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-    </StackPanel>
+    </Grid>
 </UserControl>

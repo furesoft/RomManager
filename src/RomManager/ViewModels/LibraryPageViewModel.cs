@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Options;
 using RomManager.Configurations;
@@ -13,7 +14,11 @@ public partial class LibraryPageViewModel : ObservableObject
 
     public LibraryPageViewModel(N64 system, IOptions<PathsConfiguration> pathsConfiguration)
     {
-        var games = system.GetGames(pathsConfiguration.Value);
+        var games = system.GetGames(pathsConfiguration.Value).Select(game =>
+        {
+            game.LoadCover();
+            return game;
+        });
         Games = new(games);
     }
 }
