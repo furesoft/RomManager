@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Msx : SystemInfo
+public class issueMsx : SystemInfo
 {
     public override string Name { get; } = "MSX";
     public override string Path { get; } = "msx";

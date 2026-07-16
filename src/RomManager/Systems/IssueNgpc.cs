@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class C64: SystemInfo
+public class issueC64: SystemInfo
 {
     public override string Name { get; } = "C64";
     public override string Path { get; } = "c64";

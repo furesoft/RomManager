@@ -2,10 +2,10 @@
 
 namespace RomManager.Systems;
 
-public class Zxc: SystemInfo
+public class X68000 : SystemInfo
 {
-    public override string Name { get; } = "ZX Cosmic";
-    public override string Path { get; } = "zxspectrum";
-    public override string[] Extensions { get; } = { ".zxc", ".tap", ".tzx", ".zip", ".7z" };
-    public override string IconName { get; } = "zxs.png";
+    public override string Name { get; } = "Sharp X68000";
+    public override string Path { get; } = "x68000";
+    public override string[] Extensions { get; } = { ".dim", ".img", ".d88", ".hdm", ".xdf", ".hdf", ".m3u", ".zip" };
+    public override string IconName { get; } = "x68000.png";
 }

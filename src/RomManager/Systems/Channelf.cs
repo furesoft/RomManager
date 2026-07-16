@@ -1,6 +1,11 @@
-﻿namespace RomManager.Systems;
+﻿using RomManager.Models;
 
-public class Channelf
+namespace RomManager.Systems;
+
+public class Channelf : SystemInfo
 {
-    
+    public override string Name { get; } = "Fairchild Channel F";
+    public override string Path { get; } = "channelf";
+    public override string[] Extensions { get; } = { ".bin", ".chf", ".rom", ".zip", ".7z" };
+    public override string? IconName { get; } = null;
 }

@@ -1,8 +1,11 @@
-﻿namespace RomManager.Systems;
+﻿using RomManager.Models;
 
-public class Arcadia
+namespace RomManager.Systems;
+
+public class Arcadia : SystemInfo
 {
-    public Arcadia()
-    {
-    }
+    public override string Name { get; } = "Emerson Arcadia 2001";
+    public override string Path { get; } = "arcadia";
+    public override string[] Extensions { get; } = { ".bin", ".rom", ".zip" };
+    public override string IconName { get; } = "arcadia.png";
 }

@@ -1,6 +1,12 @@
-﻿namespace RomManager.Systems;
+﻿using RomManager.Models;
 
-public class Lutris
+namespace RomManager.Systems;
+
+public class Lutris : SystemInfo
 {
+    public override string Name { get; } = "Lutris";
+    public override string Path { get; } = "lutris";
+    public override string[] Extensions { get; } = { ".lutris", ".desktop", ".json", ".zip" };
+    public override string? IconName { get; } = null;
     
 }

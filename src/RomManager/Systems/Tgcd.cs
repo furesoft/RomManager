@@ -1,6 +1,12 @@
-﻿namespace RomManager.Systems;
+﻿using RomManager.Models;
 
-public class Tgcd
+namespace RomManager.Systems;
+
+public class Tgcd : SystemInfo
 {
+    public override string Name { get; } = "TurboGrafx-CD";
+    public override string Path { get; } = "tgcd";
+    public override string[] Extensions { get; } = { ".cue", ".chd", ".iso", ".toc", ".bin", ".zip" };
+    public override string? IconName { get; } = null;
     
 }

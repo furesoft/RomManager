@@ -1,6 +1,11 @@
-﻿namespace RomManager.Systems;
+﻿using RomManager.Models;
 
-public class Daphne
+namespace RomManager.Systems;
+
+public class Daphne : SystemInfo
 {
-    
+    public override string Name { get; } = "LaserDisc Arcade";
+    public override string Path { get; } = "daphne";
+    public override string[] Extensions { get; } = { ".daphne", ".squashfs", ".zip" };
+    public override string? IconName { get; } = null;
 }
