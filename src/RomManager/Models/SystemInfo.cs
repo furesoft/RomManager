@@ -14,7 +14,7 @@ public abstract class SystemInfo
     public abstract string Path { get; }
     public abstract string[] Extensions { get; }
 
-    public abstract string IconName { get; }
+    public abstract string? IconName { get; }
 
     public override string ToString()
     {
