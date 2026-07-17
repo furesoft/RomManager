@@ -4,6 +4,9 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![CodeFactor](https://www.codefactor.io/repository/github/furesoft/rommanager/badge)](https://www.codefactor.io/repository/github/furesoft/rommanager)
+![GitHub Sponsors](https://img.shields.io/github/sponsors/furesoft)
+![GitHub Release](https://img.shields.io/github/v/release/furesoft/RomManager)
+
 
 A versatile tool to help organizing roms.
 
