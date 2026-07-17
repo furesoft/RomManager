@@ -1,4 +1,4 @@
-﻿using RomManager.Models;
+using RomManager.Models;
 
 namespace RomManager.Systems;
 
@@ -8,5 +8,4 @@ public class Ti99 : SystemInfo
     public override string Path { get; } = "ti99";
     public override string[] Extensions { get; } = { ".bin", ".rpk", ".dsk", ".zip" };
     public override string? IconName { get; } = null;
-    
 }

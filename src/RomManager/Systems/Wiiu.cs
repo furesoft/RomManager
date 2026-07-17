@@ -1,4 +1,4 @@
-﻿using RomManager.Models;
+using RomManager.Models;
 
 namespace RomManager.Systems;
 
@@ -8,5 +8,4 @@ public class Wiiu : SystemInfo
     public override string Path { get; } = "wiiu";
     public override string[] Extensions { get; } = { ".wua", ".rpx", ".wud", ".wux", ".xml" };
     public override string? IconName { get; } = null;
-    
 }
