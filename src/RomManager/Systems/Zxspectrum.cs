@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Zxc : SystemInfo
+public class Zxspectrum : SystemInfo
 {
     public override string Name { get; } = "ZX Spectrum clones";
     public override string Path { get; } = "zxc";

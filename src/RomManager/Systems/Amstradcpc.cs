@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Amstradpc : SystemInfo
+public class Amstradcpc : SystemInfo
 {
     public override string Name { get; } = "Amstrad PC";
     public override string Path { get; } = "amstradpc";
