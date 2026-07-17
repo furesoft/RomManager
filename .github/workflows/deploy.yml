@@ -39,7 +39,7 @@ jobs:
         run: dotnet publish src/RomManager/RomManager.csproj --configuration Release --runtime linux-x64 --no-self-contained --output ./publish-linux
 
       - name: Install Velopack
-        run: dotnet tool install --global vpk --version 0.0.1298
+        run: dotnet tool install --global vpk
 
       - name: Download Old Windows Release
         run: |
@@ -51,11 +51,11 @@ jobs:
 
       - name: Velopack Pack Windows
         run: |
-          vpk [win] pack --packVersion ${{ steps.version.outputs.version }} -u Furesoft_RomManager --packTitle 'Rom Manager' -p ./publish-win --mainExe ./publish-win/RomManager.exe
+          vpk [win] pack --packVersion ${{ steps.version.outputs.version }} -u Furesoft_RomManager --packTitle 'Rom Manager' -p ./publish-win --mainExe ./RomManager.exe
 
       - name: Velopack Pack Linux
         run: |
-          vpk [linux] pack --packVersion ${{ steps.version.outputs.version }} -u Furesoft_RomManager --packTitle 'Rom Manager' -p ./publish-win --mainExe ./publish-win/RomManager.exe
+          vpk [linux] pack --packVersion ${{ steps.version.outputs.version }} -u Furesoft_RomManager --packTitle 'Rom Manager' -p ./publish-linux --mainExe ./RomManager.exe
 
       - name: Velopack Upload Windows
         run: |
