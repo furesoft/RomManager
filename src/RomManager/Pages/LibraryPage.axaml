@@ -19,7 +19,7 @@
                              IsSticky="True"
                              OverflowButtonVisibility="Auto">
             <controls:CommandBarButton Label="Scan"
-                                       Icon="{DynamicResource CubeScan}" />
+                                       Icon="{x:Static MaterialIcons.Magnify}" />
             <controls:CommandBarButton Label="Import"
                                        Icon="{DynamicResource CopyRegular}" />
             <controls:CommandBarButton Label="Find Duplicates"
