@@ -46,7 +46,7 @@ public abstract class SystemInfo
 
     private IEnumerable<IHasFilename> GetFiles(PathsConfiguration pathsConfiguration, string romFilename)
     {
-       yield return new RomFile { Filename = romFilename };
+       yield return new RomFile { Filename = romFilename, SystemInfo = this};
 
        var name = System.IO.Path.GetFileNameWithoutExtension(romFilename);
        var mediaPath = System.IO.Path.Combine(pathsConfiguration.BasePath, pathsConfiguration.Media, Path, "covers");

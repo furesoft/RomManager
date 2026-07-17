@@ -16,7 +16,7 @@ public partial class LibraryPageViewModel : ObservableObject
     {
         var games = system.GetGames(pathsConfiguration.Value).Select(game =>
         {
-            game.LoadCover();
+            game.Load();
             return game;
         });
         Games = new(games);

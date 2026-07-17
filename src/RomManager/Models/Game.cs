@@ -19,13 +19,17 @@ public partial class Game : ObservableObject
 
     [ObservableProperty] private IImage? _coverArt;
 
-    public void LoadCover()
+    [ObservableProperty] private SystemInfo[] _systems;
+
+    public void Load()
     {
         var art = Files.OfType<CoverArtImage>().FirstOrDefault();
         if (art != null && File.Exists(art.Filename))
         {
             CoverArt = new Bitmap(art.Filename);
         }
+
+        Systems = Files.OfType<RomFile>().Select(f => f.SystemInfo).ToArray();
     }
 
     public override string ToString()
