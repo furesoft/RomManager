@@ -1,4 +1,4 @@
-﻿using RomManager.Models;
+using RomManager.Models;
 
 namespace RomManager.Systems;
 
@@ -8,5 +8,4 @@ public class Gamegear : SystemInfo
     public override string Path { get; } = "gamegear";
     public override string[] Extensions { get; } = { ".gg", ".zip" };
     public override string? IconName { get; } = null;
-    
 }

@@ -1,4 +1,4 @@
-﻿using RomManager.Models;
+using RomManager.Models;
 
 namespace RomManager.Systems;
 public class J2me : SystemInfo
@@ -7,5 +7,4 @@ public class J2me : SystemInfo
     public override string Path { get; } = "j2me";
     public override string[] Extensions { get; } = { ".jar", ".jad", ".zip" };
     public override string? IconName { get; } = null;
-    
 }

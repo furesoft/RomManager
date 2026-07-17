@@ -1,4 +1,4 @@
-﻿using RomManager.Models;
+using RomManager.Models;
 
 namespace RomManager.Systems;
 
@@ -8,5 +8,4 @@ public class Laserdisc:SystemInfo
     public override string Path { get; } = "daphne";
     public override string[] Extensions { get; } = { ".daphne", ".squashfs", ".zip" };
     public override string? IconName { get; } = null;
-    
 }
