@@ -55,7 +55,7 @@ jobs:
 
       - name: Velopack Pack Linux
         run: |
-          vpk [linux] pack --packVersion ${{ steps.version.outputs.version }} -u Furesoft_RomManager --packTitle 'Rom Manager' -p ./publish-linux --mainExe ./RomManager.exe
+          vpk [linux] pack --packVersion ${{ steps.version.outputs.version }} -u Furesoft_RomManager --packTitle 'Rom Manager' -p ./publish-linux --mainExe ./RomManager
 
       - name: Velopack Upload Windows
         run: |
