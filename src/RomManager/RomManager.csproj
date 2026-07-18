@@ -53,4 +53,8 @@
   <ItemGroup>
     <AvaloniaXaml Remove="Views\LibraryView.axaml" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\Icons\Regions\" />
+  </ItemGroup>
 </Project>
