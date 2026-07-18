@@ -9,7 +9,7 @@ namespace RomManager.Core;
 
 public abstract class StartupInitializer : INotifyPropertyChanged
 {
-    private string _text;
+    private string _text = "Loading ...";
     public string Text
     {
         get => _text;
