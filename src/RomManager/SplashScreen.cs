@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -31,17 +32,27 @@ public class SplashScreen : IPleasantSplashScreen
 
     public async Task RunTasks(CancellationToken cancellationToken)
     {
-        var initializers = AppHost.Services.GetServices<IStartupInitializer>();
+        var initializers = AppHost.Services.GetServices<StartupInitializer>();
         var reporter = new ProgressbarProgressReporter(_progressBar);
 
         foreach (var initializer in initializers)
         {
             reporter.Report(0);
-            _infoText.Text = initializer.Text;
+            initializer.PropertyChanged += initializerOnPropertyChanged;
             await initializer.InitializeAsync(reporter, cancellationToken);
+            initializer.PropertyChanged -= initializerOnPropertyChanged;
         }
 
         reporter.Report(100);
         _infoText.Text = "Loading ...";
+    }
+
+    private static void initializerOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == "Text")
+        {
+            var initializer = (StartupInitializer)sender!;
+            _infoText.Text = initializer.Text;
+        }
     }
 }

@@ -6,11 +6,11 @@ using Velopack.Sources;
 
 namespace RomManager.Core;
 
-public class UpdateInitializer : IStartupInitializer
+public class UpdateInitializer : StartupInitializer
 {
-    public string Text => "Check for updates...";
-    public async Task InitializeAsync(IProgress<int> progress, CancellationToken cancellationToken)
+    public override async Task InitializeAsync(IProgress<int> progress, CancellationToken cancellationToken)
     {
+        Text = "Checking for updates...";
         var mgr = new UpdateManager(new GithubSource("https://github.com/furesoft/RomManager", null, false));
 
         if (!mgr.IsInstalled)
