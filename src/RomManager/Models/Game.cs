@@ -5,6 +5,7 @@ using System.Linq;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
+using RomManager.Core.RegionDetection;
 using RomManager.Models.FileTypes;
 
 namespace RomManager.Models;
@@ -21,6 +22,8 @@ public partial class Game : ObservableObject
 
     [ObservableProperty] private SystemInfo[] _systems;
 
+    [ObservableProperty] private Region[] _regions = [Region.Unknown];
+
     public void Load()
     {
         var art = Files.OfType<CoverArtImage>().FirstOrDefault();
@@ -30,6 +33,13 @@ public partial class Game : ObservableObject
         }
 
         Systems = Files.OfType<RomFile>().Select(f => f.SystemInfo).ToArray();
+
+        // Detect regions from the ROM file
+        var romFile = Files.OfType<RomFile>().FirstOrDefault();
+        if (romFile != null && File.Exists(romFile.Filename))
+        {
+            Regions = RegionDetectorFactory.DetectRegions(romFile.Filename);
+        }
     }
 
     public override string ToString()
