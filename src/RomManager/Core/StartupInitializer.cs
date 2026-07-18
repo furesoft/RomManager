@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Threading;
 
 namespace RomManager.Core;
 
@@ -13,7 +14,13 @@ public abstract class StartupInitializer : INotifyPropertyChanged
     public string Text
     {
         get => _text;
-        protected set => SetField(ref _text, value);
+        protected set
+        {
+            Dispatcher.UIThread.Invoke(() =>
+            {
+                SetField(ref _text, value);
+            });
+        }
     }
 
     public abstract Task InitializeAsync(IProgress<int> progress, CancellationToken cancellationToken);
@@ -29,6 +36,7 @@ public abstract class StartupInitializer : INotifyPropertyChanged
         if (EqualityComparer<T>.Default.Equals(field, value)) return false;
         field = value;
         OnPropertyChanged(propertyName);
+
         return true;
     }
 }

@@ -40,7 +40,7 @@
                 <ItemsRepeater.ItemTemplate>
                     <DataTemplate x:DataType="models:Game">
                         <StackPanel Width="120" Spacing="6">
-                            <Image Source="{Binding CoverArt}" Width="100" Height="150" Stretch="UniformToFill" HorizontalAlignment="Center" />
+                            <Image Source="{Binding CoverArt, Mode=TwoWay}" Width="100" Height="150" Stretch="UniformToFill" HorizontalAlignment="Center" />
 
                             <ItemsControl ItemsSource="{Binding Systems}" HorizontalAlignment="Center">
                                 <ItemsControl.ItemsPanel>

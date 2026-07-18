@@ -39,7 +39,9 @@ public class SplashScreen : IPleasantSplashScreen
         {
             reporter.Report(0);
             initializer.PropertyChanged += initializerOnPropertyChanged;
+
             await initializer.InitializeAsync(reporter, cancellationToken);
+
             initializer.PropertyChanged -= initializerOnPropertyChanged;
         }
 

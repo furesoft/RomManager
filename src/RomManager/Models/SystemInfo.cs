@@ -23,8 +23,13 @@ public abstract class SystemInfo
 
     public bool IsReachable(PathsConfiguration pathsConfiguration)
     {
+        return Directory.Exists(GetDirectory(pathsConfiguration));
+    }
+
+    public string GetDirectory(PathsConfiguration pathsConfiguration)
+    {
         var folderPath = System.IO.Path.Combine(pathsConfiguration.BasePath, pathsConfiguration.Roms, Path);
-        return Directory.Exists(folderPath);
+        return folderPath;
     }
 
     public List<Game> GetGames(PathsConfiguration pathsConfiguration)
@@ -41,13 +46,18 @@ public abstract class SystemInfo
 
         var games =
             from file in roms
-            select new Game
+            select GetGame(pathsConfiguration, file);
+
+        return games.ToList();
+    }
+
+    private Game GetGame(PathsConfiguration pathsConfiguration, string file)
+    {
+        return new Game
         {
             Name = System.IO.Path.GetFileNameWithoutExtension(file),
             Files = GetFiles(pathsConfiguration, file).ToArray()
         };
-
-        return games.ToList();
     }
 
     private IEnumerable<IHasFilename> GetFiles(PathsConfiguration pathsConfiguration, string romFilename)
