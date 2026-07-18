@@ -23,13 +23,19 @@ public abstract class SystemInfo
 
     public bool IsReachable(PathsConfiguration pathsConfiguration)
     {
-        var folderPath = System.IO.Path.Combine(pathsConfiguration.BasePath, Path);
+        var folderPath = System.IO.Path.Combine(pathsConfiguration.BasePath, pathsConfiguration.Roms, Path);
         return Directory.Exists(folderPath);
     }
 
     public List<Game> GetGames(PathsConfiguration pathsConfiguration)
     {
+        if (!IsReachable(pathsConfiguration))
+        {
+            return [];
+        }
+
         var folderPath = System.IO.Path.Combine(pathsConfiguration.BasePath, pathsConfiguration.Roms, Path);
+
         var roms = Directory.EnumerateFiles(folderPath, "*", SearchOption.AllDirectories)
             .Where(file => Extensions.Contains(System.IO.Path.GetExtension(file).ToLower()));
 
