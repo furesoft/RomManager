@@ -31,6 +31,8 @@ For support, join our [discord](https://discord.gg/wpwGVBbG4R)
 ## Attribution
 
 Retro Icons by [KyleBing/retro-game-console-icons](https://github.com/KyleBing/retro-game-console-icons)
+Additional System Icons sourced from [RetroPie/es-theme-carbon](https://github.com/RetroPie/es-theme-carbon)
+Xbox icon sourced from [Wikipedia/Wikimedia](https://en.wikipedia.org/wiki/Xbox)
 Flag Icons by [lipis/flag-icons](https://github.com/lipis/flag-icons)
 
 ## Contributing
