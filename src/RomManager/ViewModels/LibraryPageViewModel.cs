@@ -1,8 +1,13 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Collections;
+using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using RomManager.Core;
 using RomManager.Core.RegionDetection;
 using RomManager.Models;
 
@@ -10,12 +15,14 @@ namespace RomManager.ViewModels;
 
 public partial class LibraryPageViewModel : ObservableObject
 {
+    private readonly FilenameFilterBuilder _filenameFilterBuilder;
     [ObservableProperty] private Region? _selectedRegion;
 
     [ObservableProperty] private SystemInfo? _selectedSystem;
 
-    public LibraryPageViewModel(Core.RomManager romManager)
+    public LibraryPageViewModel(Core.RomManager romManager, FilenameFilterBuilder filenameFilterBuilder)
     {
+        _filenameFilterBuilder = filenameFilterBuilder;
         RomManager = romManager;
 
         AvailableSystems = romManager.Systems.Prepend(null).ToArray();
@@ -57,5 +64,21 @@ public partial class LibraryPageViewModel : ObservableObject
                 return false;
 
         return true;
+    }
+
+    [RelayCommand]
+    public async Task ImportRom()
+    {
+        var mainWindow = App.Current.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop
+            ? desktop.MainWindow
+            : null;
+
+        var topLevel = TopLevel.GetTopLevel(mainWindow);
+        var result = await topLevel!.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
+        {
+            AllowMultiple = false,
+            Title = "Select ROM to Import",
+            FileTypeFilter = _filenameFilterBuilder.GetFilter()
+        });
     }
 }

@@ -35,6 +35,7 @@ public static class AppBuilderHostingExtensions
         hostBuilder.Services.AddTransient<SettingsPageViewModel>();
 
         hostBuilder.Services.AddSingleton<Core.RomManager>();
+        hostBuilder.Services.AddSingleton<FilenameFilterBuilder>();
 
         AddSystemInfos(hostBuilder);
 
