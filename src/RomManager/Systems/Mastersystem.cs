@@ -6,6 +6,6 @@ public class Mastersystem : SystemInfo
 {
     public override string Name { get; } = "Sega Master System";
     public override string Path { get; } = "mastersystem";
-    public override string[] Extensions { get; } = { ".sms", ".bin", ".zip" };
+    public override string[] Extensions { get; } = [".sms", ".bin", ".zip"];
     public override string? IconName { get; } = null;
 }

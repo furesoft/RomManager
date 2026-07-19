@@ -6,6 +6,6 @@ public class Electron : SystemInfo
 {
     public override string Name { get; } = "Acorn Electron";
     public override string Path { get; } = "electron";
-    public override string[] Extensions { get; } = { ".uef", ".ssd", ".dsd", ".rom", ".zip" };
+    public override string[] Extensions { get; } = [".uef", ".ssd", ".dsd", ".rom", ".zip"];
     public override string? IconName { get; } = null;
 }
