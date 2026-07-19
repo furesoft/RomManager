@@ -38,7 +38,7 @@ internal sealed class Program
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp(string[]? args = null) => AppBuilder
         .Configure<App>()
-        .UseMicrosoftHosting(args ?? Array.Empty<string>())
+        .UseMicrosoftHosting(args ?? [])
         .UsePlatformDetect()
         .WithInterFont()
         .LogToTrace();
