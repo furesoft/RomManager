@@ -4,8 +4,8 @@ namespace RomManager.Systems;
 
 public class Megacdjp : SystemInfo
 {
-    public override string Name { get; } = "Sega Mega-CD Japan";
-    public override string Path { get; } = "megacdjp";
+    public override string Name => "Sega Mega-CD Japan";
+    public override string Path => "megacdjp";
     public override string[] Extensions { get; } = [".cue", ".iso", ".chd", ".bin", ".zip"];
-    public override string? IconName { get; } = null;
+    public override string? IconName => null;
 }

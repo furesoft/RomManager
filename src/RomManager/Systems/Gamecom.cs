@@ -4,8 +4,8 @@ namespace RomManager.Systems;
 
 public class Gamecom : SystemInfo
 {
-    public override string Name { get; } = "Game.com";
-    public override string Path { get; } = "gamecom";
+    public override string Name => "Game.com";
+    public override string Path => "gamecom";
     public override string[] Extensions { get; } = [".bin", ".tgc"];
-    public override string? IconName { get; } = null;
+    public override string? IconName => null;
 }

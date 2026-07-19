@@ -4,8 +4,8 @@ namespace RomManager.Systems;
 
 public class Scv : SystemInfo
 {
-    public override string Name { get; } = "Epoch Super Cassette Vision";
-    public override string Path { get; } = "scv";
+    public override string Name => "Epoch Super Cassette Vision";
+    public override string Path => "scv";
     public override string[] Extensions { get; } = [".scv", ".bin", ".zip"];
-    public override string? IconName { get; } = null;
+    public override string? IconName => null;
 }

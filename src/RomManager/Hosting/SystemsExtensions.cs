@@ -50,7 +50,6 @@ public static partial class AppBuilderHostingExtensions
         hostBuilder.Services.AddTransient<SystemInfo, Dreamcast>();
         hostBuilder.Services.AddTransient<SystemInfo, Easyrpg>();
         hostBuilder.Services.AddTransient<SystemInfo, Electron>();
-        hostBuilder.Services.AddTransient<SystemInfo, Emulators>();
         hostBuilder.Services.AddTransient<SystemInfo, Famicom>();
         hostBuilder.Services.AddTransient<SystemInfo, Fba>();
         hostBuilder.Services.AddTransient<SystemInfo, Fbneo>();
@@ -112,10 +111,9 @@ public static partial class AppBuilderHostingExtensions
         hostBuilder.Services.AddTransient<SystemInfo, Plus4>();
         hostBuilder.Services.AddTransient<SystemInfo, Pokemini>();
         hostBuilder.Services.AddTransient<SystemInfo, PortMaster>();
-        hostBuilder.Services.AddTransient<SystemInfo, Ps1>();
+        hostBuilder.Services.AddTransient<SystemInfo, Psx>();
         hostBuilder.Services.AddTransient<SystemInfo, Ps2>();
         hostBuilder.Services.AddTransient<SystemInfo, Psp>();
-        hostBuilder.Services.AddTransient<SystemInfo, Psx>();
         hostBuilder.Services.AddTransient<SystemInfo, Quake>();
         hostBuilder.Services.AddTransient<SystemInfo, SatellaView>();
         hostBuilder.Services.AddTransient<SystemInfo, Scummvm>();

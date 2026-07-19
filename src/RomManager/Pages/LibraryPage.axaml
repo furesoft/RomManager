@@ -38,10 +38,17 @@
                 <ComboBox ItemsSource="{Binding AvailableSystems}"
                           PlaceholderText="All"
                           SelectedItem="{Binding SelectedSystem}"
-                          Width="150">
+                          Width="300">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource FilterComboBoxItemToTextConverter}}" />
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Source="{Binding Converter={StaticResource SystemIconNameToImageConverter}}"
+                                       Width="16"
+                                       Height="16"
+                                       VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Converter={StaticResource FilterComboBoxItemToTextConverter}}"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>

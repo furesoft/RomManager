@@ -4,8 +4,8 @@ namespace RomManager.Systems;
 
 public class Arcade : SystemInfo
 {
-    public override string Name { get; } = "Arcade";
-    public override string Path { get; } = "arcade";
+    public override string Name => "Arcade";
+    public override string Path => "arcade";
     public override string[] Extensions { get; } = [".zip"];
-    public override string IconName { get; } = "arcade.png";
+    public override string IconName => "arcade.png";
 }

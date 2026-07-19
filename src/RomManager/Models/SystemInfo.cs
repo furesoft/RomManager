@@ -26,6 +26,21 @@ public abstract class SystemInfo
         return Directory.Exists(GetDirectory(pathsConfiguration));
     }
 
+    public bool HasGames(PathsConfiguration pathsConfiguration)
+    {
+        if (!IsReachable(pathsConfiguration))
+        {
+            return false;
+        }
+
+        var folderPath = System.IO.Path.Combine(pathsConfiguration.BasePath, pathsConfiguration.Roms, Path);
+
+        var roms = Directory.EnumerateFiles(folderPath, "*", SearchOption.AllDirectories)
+            .Where(file => Extensions.Contains(System.IO.Path.GetExtension(file).ToLower()));
+
+        return roms.Any();
+    }
+
     public string GetDirectory(PathsConfiguration pathsConfiguration)
     {
         var folderPath = System.IO.Path.Combine(pathsConfiguration.BasePath, pathsConfiguration.Roms, Path);

@@ -4,8 +4,8 @@ namespace RomManager.Systems;
 
 public class Pokemini : SystemInfo
 {
-    public override string Name { get; } = "Nintendo Pokémon Mini";
-    public override string Path { get; } = "pokemini";
+    public override string Name => "Nintendo Pokémon Mini";
+    public override string Path => "pokemini";
     public override string[] Extensions { get; } = [".min", ".zip"];
-    public override string IconName { get; } = "poke.png";
+    public override string IconName => "poke.png";
 }

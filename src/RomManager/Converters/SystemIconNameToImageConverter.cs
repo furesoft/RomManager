@@ -5,6 +5,7 @@ using Avalonia.Data.Converters;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
+using RomManager.Models;
 
 namespace RomManager.Converters;
 
@@ -14,7 +15,14 @@ public sealed class SystemIconNameToImageConverter : IValueConverter
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is not string iconName || string.IsNullOrWhiteSpace(iconName))
+        var iconName = value switch
+        {
+            string s => s,
+            SystemInfo systemInfo => systemInfo.IconName,
+            _ => null
+        };
+
+        if (string.IsNullOrWhiteSpace(iconName))
         {
             return null;
         }

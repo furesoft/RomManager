@@ -7,6 +7,8 @@ using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Options;
+using RomManager.Configurations;
 using RomManager.Core;
 using RomManager.Core.RegionDetection;
 using RomManager.Models;
@@ -20,12 +22,23 @@ public partial class LibraryPageViewModel : ObservableObject
 
     [ObservableProperty] private SystemInfo? _selectedSystem;
 
-    public LibraryPageViewModel(Core.RomManager romManager, FilenameFilterBuilder filenameFilterBuilder)
+    public LibraryPageViewModel(Core.RomManager romManager, FilenameFilterBuilder filenameFilterBuilder, IOptions<PathsConfiguration> pathsConfiguration)
     {
         _filenameFilterBuilder = filenameFilterBuilder;
         RomManager = romManager;
 
-        AvailableSystems = romManager.Systems.Prepend(null).OrderBy(s => s?.Name).ToArray();
+        AvailableSystems = romManager.Systems
+            .Select(system => new
+            {
+                System = system,
+                HasGames = system.HasGames(pathsConfiguration.Value)
+            })
+            .OrderByDescending(item => item.HasGames)
+            .ThenBy(item => item.System.Name)
+            .Select(item => (SystemInfo?)item.System)
+            .Prepend(null)
+            .ToArray();
+
         AvailableRegions = Enum.GetValues<Region>().Cast<Region?>().Prepend(null).ToArray();
 
         GamesView = new DataGridCollectionView(romManager.Games)

@@ -4,8 +4,8 @@ namespace RomManager.Systems;
 
 public class Windows3x : SystemInfo
 {
-    public override string Name { get; } = "Microsoft Windows 3.x";
-    public override string Path { get; } = "windows3x";
+    public override string Name => "Microsoft Windows 3.x";
+    public override string Path => "windows3x";
     public override string[] Extensions { get; } = [".exe", ".bat", ".com", ".conf", ".zip"];
-    public override string? IconName { get; } = null;
+    public override string? IconName => null;
 }

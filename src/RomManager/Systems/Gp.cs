@@ -4,8 +4,8 @@ namespace RomManager.Systems;
 
 public class Gp: SystemInfo
 {
-    public override string Name { get; } = "GamePark GP32";
-    public override string Path { get; } = "gp";
+    public override string Name => "GamePark GP32";
+    public override string Path => "gp";
     public override string[] Extensions { get; } = [".smc", ".fxe", ".gxb", ".zip", ".7z"];
-    public override string? IconName { get; } = null;
+    public override string? IconName => null;
 }
