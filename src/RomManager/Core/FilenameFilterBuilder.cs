@@ -8,8 +8,15 @@ namespace RomManager.Core;
 
 public class FilenameFilterBuilder(IEnumerable<SystemInfo> systems)
 {
+    private FilePickerFileType[]? _filter;
+
     public FilePickerFileType[] GetFilter()
     {
+        if (_filter != null)
+        {
+            return _filter;
+        }
+
         var filterLines = new List<FilePickerFileType>();
 
         var allExtensions = systems
@@ -39,7 +46,8 @@ public class FilenameFilterBuilder(IEnumerable<SystemInfo> systems)
             });
         }
 
-        return filterLines.ToArray();
+        _filter = filterLines.ToArray();
+        return _filter;
     }
 
     private static string EnsureWildcard(string ext)
