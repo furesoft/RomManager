@@ -7,16 +7,9 @@
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                 x:DataType="vm:MainWindowViewModel"
                 x:Class="RomManager.MainWindow"
-                Title="Rom Manager"
-                TitleBarType="NavigationViewClassicExtended"
-                WindowStartupLocation="CenterScreen"
-                ExtendsContentIntoTitleBar="True"
-                MinWidth="600"
-                MinHeight="500"
-                Width="1200"
-                Height="700"
-                Subtitle="Example"
-                Icon="/Assets/logo.ico">
+                Title="Rom Manager" Subtitle="Rom Manager" TitleBarType="NavigationViewClassicExtended"
+                WindowStartupLocation="CenterScreen" ExtendsContentIntoTitleBar="True" Icon="/Assets/logo.ico"
+                MinWidth="600" MinHeight="500" Width="1200" Height="700">
     <Panel>
         <NavigationView x:Name="MainNavigationView" AlwaysOpen="True" IsOpen="True" BindWindowSettings="True">
             <NavigationViewItem Header="Home"
@@ -33,7 +26,6 @@
                 </NavigationViewItem.Content>
             </NavigationViewItem>
 
-
             <NavigationViewItem Header="Settings" DockPanel.Dock="Bottom"
                                 Icon="{x:Static MaterialIcons.CogOutline}">
                 <NavigationViewItem.Content>
@@ -41,6 +33,5 @@
                 </NavigationViewItem.Content>
             </NavigationViewItem>
         </NavigationView>
-
     </Panel>
 </PleasantWindow>
