@@ -5,11 +5,20 @@
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:pages="clr-namespace:RomManager.Pages"
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                x:Class="RomManager.MainWindow" Title="Rom Manager" ExtendsContentIntoTitleBar="True"
-                x:DataType="vm:MainWindowViewModel" WindowStartupLocation="CenterScreen"
+                x:DataType="vm:MainWindowViewModel"
+                x:Class="RomManager.MainWindow"
+                Title="Rom Manager"
+                TitleBarType="NavigationViewClassicExtended"
+                WindowStartupLocation="CenterScreen"
+                ExtendsContentIntoTitleBar="True"
+                MinWidth="600"
+                MinHeight="500"
+                Width="1200"
+                Height="700"
+                Subtitle="Example"
                 Icon="/Assets/logo.ico">
-    <PleasantView>
-        <NavigationView x:Name="MainNavigationView" AlwaysOpen="True" IsOpen="True">
+    <Panel>
+        <NavigationView x:Name="MainNavigationView" AlwaysOpen="True" IsOpen="True" BindWindowSettings="True">
             <NavigationViewItem Header="Home"
                                 Icon="{x:Static MaterialIcons.ViewDashboard}">
                 <NavigationViewItem.Content>
@@ -33,6 +42,5 @@
             </NavigationViewItem>
         </NavigationView>
 
-    </PleasantView>
-
+    </Panel>
 </PleasantWindow>

@@ -17,23 +17,21 @@
     </UserControl.Resources>
 
     <Grid RowDefinitions="Auto,Auto,*" RowSpacing="8">
-        <controls:CommandBar DefaultLabelPosition="Bottom"
+        <CommandBar DefaultLabelPosition="Bottom"
                              IsOpen="False"
                              IsSticky="True"
                              OverflowButtonVisibility="Auto">
-            <controls:CommandBarButton Label="Scan"
+            <CommandBarButton Label="Scan"
                                        Icon="{x:Static MaterialIcons.Magnify}" />
-            <controls:CommandBarButton Label="Import" Command="{Binding ImportRomCommand}"
+            <CommandBarButton Label="Import" Command="{Binding ImportRomCommand}"
                                        Icon="{DynamicResource CopyRegular}" />
-            <controls:CommandBarButton Label="Find Duplicates"
+            <CommandBarButton Label="Find Duplicates"
                                        Icon="{DynamicResource EditRegular}" />
-
-
-        </controls:CommandBar>
+        </CommandBar>
 
         <StackPanel Grid.Row="1">
             <!-- System Filter -->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0" Spacing="15">
                 <TextBlock Text="System: " VerticalAlignment="Center" Margin="0,0,5,0" />
                 <ComboBox ItemsSource="{Binding AvailableSystems}"
                           PlaceholderText="All"
