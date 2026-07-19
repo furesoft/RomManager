@@ -25,7 +25,7 @@ public partial class LibraryPageViewModel : ObservableObject
         _filenameFilterBuilder = filenameFilterBuilder;
         RomManager = romManager;
 
-        AvailableSystems = romManager.Systems.Prepend(null).ToArray();
+        AvailableSystems = romManager.Systems.Prepend(null).OrderBy(s => s?.Name).ToArray();
         AvailableRegions = Enum.GetValues<Region>().Cast<Region?>().Prepend(null).ToArray();
 
         GamesView = new DataGridCollectionView(romManager.Games)
