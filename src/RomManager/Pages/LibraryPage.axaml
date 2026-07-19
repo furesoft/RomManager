@@ -15,7 +15,7 @@
         <converters:RegionToImageConverter x:Key="RegionToImageConverter" />
     </UserControl.Resources>
 
-    <Grid RowDefinitions="Auto,*" RowSpacing="8">
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="8">
         <controls:CommandBar DefaultLabelPosition="Bottom"
                              IsOpen="False"
                              IsSticky="True"
@@ -26,12 +26,36 @@
                                        Icon="{DynamicResource CopyRegular}" />
             <controls:CommandBarButton Label="Find Duplicates"
                                        Icon="{DynamicResource EditRegular}" />
+
+
         </controls:CommandBar>
 
-        <ScrollViewer Grid.Row="1"
+        <StackPanel Grid.Row="1">
+            <!-- System Filter -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
+                <TextBlock Text="System: " VerticalAlignment="Center" Margin="0,0,5,0" />
+                <ComboBox ItemsSource="{Binding AvailableSystems}"
+                          PlaceholderText="All"
+                          SelectedItem="{Binding SelectedSystem}"
+                          Width="150" />
+            </StackPanel>
+
+            <!-- Region Filter -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
+                <TextBlock Text="Region: " VerticalAlignment="Center" Margin="0,0,5,0" />
+                <ComboBox ItemsSource="{Binding AvailableRegions}"
+                          PlaceholderText="All"
+                          SelectedItem="{Binding SelectedRegion}"
+                          Width="120" />
+            </StackPanel>
+
+            <TextBlock Text="{Binding GamesView.Count, Mode=TwoWay, StringFormat='{}{0} Games'}" />
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="2"
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Disabled">
-            <ItemsRepeater ItemsSource="{Binding Games}">
+            <ItemsRepeater ItemsSource="{Binding GamesView}">
                 <ItemsRepeater.Layout>
                     <UniformGridLayout MinItemWidth="120"
                                        MinColumnSpacing="12"

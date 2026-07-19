@@ -1,21 +1,61 @@
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.Options;
-using RomManager.Configurations;
+using RomManager.Core.RegionDetection;
 using RomManager.Models;
 
 namespace RomManager.ViewModels;
 
 public partial class LibraryPageViewModel : ObservableObject
 {
-    public Core.RomManager RomManager { get; }
-    public ObservableCollection<Game> Games { get; set; }
+    [ObservableProperty] private Region? _selectedRegion;
 
-    public LibraryPageViewModel(Core.RomManager romManager, IOptions<PathsConfiguration> pathsConfiguration)
+    [ObservableProperty] private SystemInfo? _selectedSystem;
+
+    public LibraryPageViewModel(Core.RomManager romManager)
     {
         RomManager = romManager;
 
-        Games = new(romManager.Games);
+        AvailableSystems = romManager.Systems.Prepend(null).ToArray();
+        AvailableRegions = Enum.GetValues<Region>().Cast<Region?>().Prepend(null).ToArray();
+
+        GamesView = new DataGridCollectionView(romManager.Games)
+        {
+            Filter = FilterGames
+        };
     }
 
+    public Core.RomManager RomManager { get; }
+
+    public DataGridCollectionView GamesView { get; }
+
+    public SystemInfo?[] AvailableSystems { get; }
+    public Region?[] AvailableRegions { get; }
+
+    partial void OnSelectedSystemChanged(SystemInfo? value)
+    {
+        GamesView.Refresh();
+    }
+
+    partial void OnSelectedRegionChanged(Region? value)
+    {
+        GamesView.Refresh();
+    }
+
+    private bool FilterGames(object obj)
+    {
+        if (obj is not Game game) return false;
+
+        if (SelectedSystem is not null)
+            if (game.Systems.All(s => s.Name != SelectedSystem.Name))
+                return false;
+
+        if (SelectedRegion is not null)
+            if (game.Regions.All(r => r != SelectedRegion))
+                return false;
+
+        return true;
+    }
 }
