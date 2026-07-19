@@ -18,7 +18,7 @@ public sealed class SystemIconNameToImageConverter : IValueConverter
         var iconName = value switch
         {
             string s => s,
-            SystemInfo systemInfo => systemInfo.IconName,
+            SystemInfo systemInfo => systemInfo.IconName ?? $"{systemInfo.Path}.png",
             _ => null
         };
 
