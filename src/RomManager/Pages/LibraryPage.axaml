@@ -13,6 +13,7 @@
     <UserControl.Resources>
         <converters:SystemIconNameToImageConverter x:Key="SystemIconNameToImageConverter" />
         <converters:RegionToImageConverter x:Key="RegionToImageConverter" />
+        <converters:FilterComboBoxItemToTextConverter x:Key="FilterComboBoxItemToTextConverter" />
     </UserControl.Resources>
 
     <Grid RowDefinitions="Auto,Auto,*" RowSpacing="8">
@@ -37,7 +38,13 @@
                 <ComboBox ItemsSource="{Binding AvailableSystems}"
                           PlaceholderText="All"
                           SelectedItem="{Binding SelectedSystem}"
-                          Width="150" />
+                          Width="150">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource FilterComboBoxItemToTextConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </StackPanel>
 
             <!-- Region Filter -->
@@ -46,7 +53,13 @@
                 <ComboBox ItemsSource="{Binding AvailableRegions}"
                           PlaceholderText="All"
                           SelectedItem="{Binding SelectedRegion}"
-                          Width="120" />
+                          Width="120">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource FilterComboBoxItemToTextConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </StackPanel>
 
             <TextBlock Text="{Binding GamesView.Count, Mode=TwoWay, StringFormat='{}{0} Games'}" />
