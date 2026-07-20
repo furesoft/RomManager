@@ -104,9 +104,7 @@
                                 ClipToBounds="True">
 
                             <Grid RowDefinitions="Auto, Auto, Auto">
-
                                 <Grid Grid.Row="0" Width="110" Height="150" HorizontalAlignment="Center">
-
                                     <Border CornerRadius="6"
                                             ClipToBounds="True"
                                             Background="#202020"
@@ -124,6 +122,7 @@
                                                 <StackPanel Orientation="Horizontal" Spacing="4" />
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
+
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate x:DataType="models:SystemInfo">
                                                 <Border Background="#B31A1A1A"
@@ -138,27 +137,32 @@
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-                                </Grid>
 
-                                <ItemsControl Grid.Row="1"
-                                              ItemsSource="{Binding Regions}"
-                                              HorizontalAlignment="Center"
-                                              Margin="0,8,0,0">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal" Spacing="4" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate x:DataType="regionDetection:Region">
-                                            <Border CornerRadius="2" ClipToBounds="True" Width="20" Height="14" VerticalAlignment="Center">
-                                                <Image Source="{Binding Converter={StaticResource RegionToImageConverter}}"
-                                                       Stretch="UniformToFill"
-                                                       ToolTip.Tip="{Binding}" />
-                                            </Border>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
+                                    <ItemsControl ItemsSource="{Binding Regions}"
+                                                  HorizontalAlignment="Left"
+                                                  VerticalAlignment="Top"
+                                                  Margin="4">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="4" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="regionDetection:Region">
+                                                <Border Background="#B31A1A1A"
+                                                        CornerRadius="4"
+                                                        Padding="4"
+                                                        BoxShadow="0 2 4 0 #30000000">
+                                                    <Image Source="{Binding Converter={StaticResource RegionToImageConverter}}"
+                                                           Width="18" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                           Height="18"
+                                                           ToolTip.Tip="{Binding }" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
 
                                 <TextBlock Grid.Row="2"
                                            Text="{Binding Name}"
