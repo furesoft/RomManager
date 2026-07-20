@@ -16,6 +16,8 @@ public abstract class SystemInfo
 
     public abstract string? IconName { get; }
 
+    public GameList GameList { get; set; }
+
     public override string ToString()
     {
         return Name;
@@ -68,9 +70,15 @@ public abstract class SystemInfo
 
     private Game GetGame(PathsConfiguration pathsConfiguration, string file)
     {
+        GameInfo gameInfo;
+        if (!GameList.GamesByFilename.TryGetValue(System.IO.Path.GetFileName(file), out gameInfo))
+        {
+            gameInfo = new GameInfo { Path = file, Name = System.IO.Path.GetFileNameWithoutExtension(file) };
+        }
+
         return new Game
         {
-            Name = System.IO.Path.GetFileNameWithoutExtension(file),
+            Info = gameInfo,
             Files = GetFiles(pathsConfiguration, file).ToArray()
         };
     }
