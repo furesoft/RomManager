@@ -74,6 +74,13 @@
                 </controls:FilterSelector>
             </Grid>
 
+            <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Center" Margin="5,0" ColumnSpacing="8">
+                <TextBlock Grid.Column="0" Text="Favourites: " VerticalAlignment="Center" />
+                <ToggleSwitch Grid.Column="1"
+                              HorizontalAlignment="Left"
+                              IsChecked="{Binding FavoritesOnly, Mode=TwoWay}" />
+            </Grid>
+
             <TextBlock Text="{Binding FilteredGamesCount, Mode=OneWay, StringFormat='{}{0} Games'}" />
         </StackPanel>
 

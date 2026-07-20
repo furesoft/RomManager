@@ -21,6 +21,7 @@ public partial class LibraryPageViewModel : ObservableObject
     private readonly INotifyCollectionChanged? _gamesCollectionNotifier;
     [ObservableProperty] private AvaloniaList<SystemInfo>? _selectedSystems = [];
     [ObservableProperty] private AvaloniaList<Region?>? _selectedRegions = [];
+    [ObservableProperty] private bool _favoritesOnly;
     [ObservableProperty] private int _currentPage = 1;
     [ObservableProperty] private int _pageCount = 1;
     [ObservableProperty] private int _pageSize = 30;
@@ -99,7 +100,17 @@ public partial class LibraryPageViewModel : ObservableObject
             return false;
         }
 
+        if (FavoritesOnly && game.Info?.IsFavorite != true)
+        {
+            return false;
+        }
+
         return true;
+    }
+
+    partial void OnFavoritesOnlyChanged(bool value)
+    {
+        RefreshPagedGames(resetToFirstPage: true);
     }
 
     partial void OnCurrentPageChanged(int value)
