@@ -7,13 +7,13 @@ namespace RomManager.Core.RegionDetection;
 
 public class RegionDetectorFactory
 {
-    private static readonly List<IRegionDetector> Detectors = new()
-    {
+    private static readonly List<IRegionDetector> Detectors =
+    [
         new SnesHeaderDetector(),
         new GenesisHeaderDetector(),
         new NesHeaderDetector(),
         new GameBoyHeaderDetector()
-    };
+    ];
 
     public static Region[] DetectRegions(string filePath)
     {

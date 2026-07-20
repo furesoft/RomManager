@@ -6,7 +6,7 @@ namespace RomManager.Core.RegionDetection;
 
 public class GenesisHeaderDetector : RegionDetector
 {
-    private static readonly string[] GenesisExtensions = { ".md", ".bin", ".gen" };
+    private static readonly string[] GenesisExtensions = [".md", ".bin", ".gen"];
 
     public override bool CanDetect(string filePath)
     {
