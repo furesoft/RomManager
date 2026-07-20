@@ -6,6 +6,7 @@
              xmlns:models="clr-namespace:RomManager.Models"
              xmlns:viewModels="clr-namespace:RomManager.ViewModels"
              xmlns:regionDetection="clr-namespace:RomManager.Core.RegionDetection"
+             xmlns:controls="clr-namespace:RomManager.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Margin="15"
              x:DataType="viewModels:LibraryPageViewModel"
              x:Class="RomManager.Pages.LibraryPage">
@@ -30,13 +31,13 @@
 
         <StackPanel Grid.Row="1" Spacing="15">
             <!-- System Filter -->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0" Spacing="5">
-                <TextBlock Text="System: " VerticalAlignment="Center" Margin="0,0,5,0" />
-                <ComboBox ItemsSource="{Binding AvailableSystems}"
-                          PlaceholderText="All"
-                          SelectedItem="{Binding SelectedSystem}"
-                          Width="300">
-                    <ComboBox.ItemTemplate>
+            <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Top" Margin="5,0" ColumnSpacing="8">
+                <TextBlock Grid.Column="0" Text="System: " VerticalAlignment="Top" Margin="0,7,0,0" />
+                <controls:FilterSelector Grid.Column="1"
+                                         HorizontalAlignment="Stretch"
+                                         ItemsSource="{Binding AvailableSystems}"
+                                         SelectedItems="{Binding SelectedSystems, Mode=TwoWay}">
+                    <controls:FilterSelector.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <Image Source="{Binding Converter={StaticResource SystemIconNameToImageConverter}}"
@@ -47,24 +48,31 @@
                                            VerticalAlignment="Center" />
                             </StackPanel>
                         </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </StackPanel>
+                    </controls:FilterSelector.ItemTemplate>
+                </controls:FilterSelector>
+            </Grid>
 
             <!-- Region Filter -->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
-                <TextBlock Text="Region: " VerticalAlignment="Center" Margin="0,0,5,0" />
-                <ComboBox ItemsSource="{Binding AvailableRegions}"
-                          PlaceholderText="All"
-                          SelectedItem="{Binding SelectedRegion}"
-                          Width="120">
-                    <ComboBox.ItemTemplate>
+            <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Top" Margin="5,0" ColumnSpacing="8">
+                <TextBlock Grid.Column="0" Text="Region: " VerticalAlignment="Top" Margin="0,7,0,0" />
+                <controls:FilterSelector Grid.Column="1"
+                                         HorizontalAlignment="Stretch"
+                                         ItemsSource="{Binding AvailableRegions}"
+                                         SelectedItems="{Binding SelectedRegions, Mode=TwoWay}">
+                    <controls:FilterSelector.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource FilterComboBoxItemToTextConverter}}" />
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Border CornerRadius="2" ClipToBounds="True" Width="20" Height="14" VerticalAlignment="Center">
+                                    <Image Source="{Binding Converter={StaticResource RegionToImageConverter}}"
+                                           Stretch="UniformToFill" />
+                                </Border>
+                                <TextBlock Text="{Binding Converter={StaticResource FilterComboBoxItemToTextConverter}}"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
                         </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </StackPanel>
+                    </controls:FilterSelector.ItemTemplate>
+                </controls:FilterSelector>
+            </Grid>
 
             <TextBlock Text="{Binding GamesView.Count, Mode=TwoWay, StringFormat='{}{0} Games'}" />
         </StackPanel>

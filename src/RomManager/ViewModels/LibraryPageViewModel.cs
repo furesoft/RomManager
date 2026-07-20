@@ -1,5 +1,4 @@
-using System;
-using System.Collections.ObjectModel;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Collections;
@@ -18,9 +17,8 @@ namespace RomManager.ViewModels;
 public partial class LibraryPageViewModel : ObservableObject
 {
     private readonly FilenameFilterBuilder _filenameFilterBuilder;
-    [ObservableProperty] private Region? _selectedRegion;
-
-    [ObservableProperty] private SystemInfo? _selectedSystem;
+    [ObservableProperty] private AvaloniaList<SystemInfo>? _selectedSystems = [];
+    [ObservableProperty] private AvaloniaList<Region?>? _selectedRegions = [];
 
     public LibraryPageViewModel(Core.RomManager romManager, FilenameFilterBuilder filenameFilterBuilder, IOptions<PathsConfiguration> pathsConfiguration)
     {
@@ -45,6 +43,16 @@ public partial class LibraryPageViewModel : ObservableObject
         {
             Filter = FilterGames
         };
+
+        SelectedSystems!.CollectionChanged += (s, e) =>
+        {
+            GamesView.Refresh();
+        };
+
+        SelectedRegions!.CollectionChanged += (s, e) =>
+        {
+            GamesView.Refresh();
+        };
     }
 
     public Core.RomManager RomManager { get; }
@@ -54,26 +62,16 @@ public partial class LibraryPageViewModel : ObservableObject
     public SystemInfo?[] AvailableSystems { get; }
     public Region?[] AvailableRegions { get; }
 
-    partial void OnSelectedSystemChanged(SystemInfo? value)
-    {
-        GamesView.Refresh();
-    }
-
-    partial void OnSelectedRegionChanged(Region? value)
-    {
-        GamesView.Refresh();
-    }
-
     private bool FilterGames(object obj)
     {
         if (obj is not Game game) return false;
 
-        if (SelectedSystem is not null)
-            if (game.Systems.All(s => s.Name != SelectedSystem.Name))
+        if (SelectedSystems is not null && SelectedSystems.Count > 0)
+            if (game.Systems.All(s => !SelectedSystems.Contains(s)))
                 return false;
 
-        if (SelectedRegion is not null)
-            if (game.Regions.All(r => r != SelectedRegion))
+        if (SelectedRegions is not null && SelectedRegions.Count > 0)
+            if (game.Regions.All(r => !SelectedRegions.Contains(r)))
                 return false;
 
         return true;

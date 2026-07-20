@@ -1,0 +1,66 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:RomManager.Controls">
+    <Design.PreviewWith>
+        <controls:FilterSelector />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|FilterSelector">
+        <Setter Property="MinWidth">260</Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <ComboBox Grid.Column="0"
+                                  Name="PART_ComboBox"
+                                  ItemTemplate="{TemplateBinding ItemTemplate}"
+                                  ItemsSource="{TemplateBinding ItemsSource}"
+                                  HorizontalAlignment="Stretch" />
+
+                        <Button Grid.Column="1"
+                                Name="PART_AddButton"
+                                Content="+"
+                                Width="34"
+                                Height="34"
+                                FontSize="18"
+                                FontWeight="SemiBold"
+                                VerticalAlignment="Center"
+                                Background="#3A3A3A"
+                                Foreground="#F2F2F2"
+                                BorderBrush="#4A4A4A"
+                                BorderThickness="1"
+                                CornerRadius="17" />
+                    </Grid>
+
+                    <ItemsControl ItemsSource="{TemplateBinding SelectedItems}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Margin="0,0,6,6"
+                                        Padding="0"
+                                        Cursor="Hand"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Tag="{Binding}">
+                                    <Border Padding="10,4"
+                                            Background="#2A2A2A"
+                                            BorderBrush="#444444"
+                                            BorderThickness="1"
+                                            CornerRadius="999">
+                                        <ContentPresenter Content="{Binding}"
+                                                          ContentTemplate="{Binding ItemTemplate, RelativeSource={RelativeSource AncestorType=controls:FilterSelector}}"
+                                                          VerticalAlignment="Center" />
+                                    </Border>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
