@@ -16,7 +16,7 @@
         <converters:FilterComboBoxItemToTextConverter x:Key="FilterComboBoxItemToTextConverter" />
     </UserControl.Resources>
 
-    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="8">
+    <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="8">
         <CommandBar DefaultLabelPosition="Bottom"
                              IsOpen="False"
                              IsSticky="True"
@@ -74,13 +74,13 @@
                 </controls:FilterSelector>
             </Grid>
 
-            <TextBlock Text="{Binding GamesView.Count, Mode=TwoWay, StringFormat='{}{0} Games'}" />
+            <TextBlock Text="{Binding FilteredGamesCount, Mode=OneWay, StringFormat='{}{0} Games'}" />
         </StackPanel>
 
         <ScrollViewer Grid.Row="2"
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Disabled">
-            <ItemsRepeater ItemsSource="{Binding GamesView}">
+            <ItemsRepeater ItemsSource="{Binding PagedGames}">
                 <ItemsRepeater.Layout>
                     <UniformGridLayout MinItemWidth="120"
                                        MinColumnSpacing="12"
@@ -169,5 +169,20 @@
                 </ItemsRepeater.ItemTemplate>
             </ItemsRepeater>
         </ScrollViewer>
+
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="8"
+                    Margin="0,4,0,0">
+            <Button Content="&lt;&lt;" Command="{Binding FirstPageCommand}" IsEnabled="{Binding HasPreviousPage}" />
+            <Button Content="&lt;" Command="{Binding PreviousPageCommand}" IsEnabled="{Binding HasPreviousPage}" />
+            <TextBlock Text="{Binding PageInfo}"
+                       VerticalAlignment="Center"
+                       Margin="8,0" />
+            <Button Content="&gt;" Command="{Binding NextPageCommand}" IsEnabled="{Binding HasNextPage}" />
+            <Button Content="&gt;&gt;" Command="{Binding LastPageCommand}" IsEnabled="{Binding HasNextPage}" />
+        </StackPanel>
     </Grid>
 </UserControl>
