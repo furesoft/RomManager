@@ -29,7 +29,7 @@
                                        Icon="{DynamicResource EditRegular}" />
         </CommandBar>
 
-        <StackPanel Grid.Row="1" Spacing="15">
+        <UniformGrid Grid.Row="1"  Columns="2" ColumnSpacing="12" RowSpacing="8">
             <!-- System Filter -->
             <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Top" Margin="5,0" ColumnSpacing="8">
                 <TextBlock Grid.Column="0" Text="System: " VerticalAlignment="Top" Margin="0,7,0,0" />
@@ -98,7 +98,7 @@
             </Grid>
 
             <TextBlock Text="{Binding FilteredGamesCount, Mode=OneWay, StringFormat='{}{0} Games'}" />
-        </StackPanel>
+        </UniformGrid>
 
         <ScrollViewer Grid.Row="2"
                       VerticalScrollBarVisibility="Auto"
