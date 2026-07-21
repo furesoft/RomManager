@@ -5,24 +5,26 @@
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:pages="clr-namespace:RomManager.Pages"
                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                x:Class="RomManager.MainWindow" Title="Rom Manager" ExtendsContentIntoTitleBar="True"
-                x:DataType="vm:MainWindowViewModel" WindowStartupLocation="CenterScreen"
-                Icon="/Assets/logo.ico">
-    <PleasantView>
-        <NavigationView x:Name="MainNavigationView" AlwaysOpen="True" IsOpen="True">
-            <NavigationViewItem Header="Home"
-                                Icon="{x:Static MaterialIcons.ViewDashboard}">
-                <NavigationViewItem.Content>
-                    <pages:HomePage />
-                </NavigationViewItem.Content>
-            </NavigationViewItem>
+                x:DataType="vm:MainWindowViewModel"
+                x:Class="RomManager.MainWindow"
+                Title="Rom Manager" Subtitle="Rom Manager" TitleBarType="NavigationViewClassicExtended"
+                WindowStartupLocation="CenterScreen" ExtendsContentIntoTitleBar="True" Icon="/Assets/logo.ico"
+                MinWidth="600" MinHeight="500" Width="1200" Height="700">
+    <Panel>
+        <NavigationView x:Name="MainNavigationView" AlwaysOpen="True" IsOpen="True" BindWindowSettings="True">
+                <NavigationViewItem Header="Home" Margin="0,0,0,5"
+                                    Icon="{x:Static MaterialIcons.ViewDashboard}">
+                    <NavigationViewItem.Content>
+                        <pages:HomePage />
+                    </NavigationViewItem.Content>
+                </NavigationViewItem>
 
-            <NavigationViewItem Header="Library"
-                                Icon="{x:Static MaterialIcons.Library}">
-                <NavigationViewItem.Content>
-                    <pages:LibraryPage />
-                </NavigationViewItem.Content>
-            </NavigationViewItem>
+                <NavigationViewItem Header="Library" Margin="0,0,0,5"
+                                    Icon="{x:Static MaterialIcons.Library}">
+                    <NavigationViewItem.Content>
+                        <pages:LibraryPage />
+                    </NavigationViewItem.Content>
+                </NavigationViewItem>
 
 
             <NavigationViewItem Header="Settings" DockPanel.Dock="Bottom"
@@ -32,7 +34,5 @@
                 </NavigationViewItem.Content>
             </NavigationViewItem>
         </NavigationView>
-
-    </PleasantView>
-
+    </Panel>
 </PleasantWindow>

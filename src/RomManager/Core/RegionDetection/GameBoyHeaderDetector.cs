@@ -5,7 +5,7 @@ namespace RomManager.Core.RegionDetection;
 
 public class GameBoyHeaderDetector : RegionDetector
 {
-    private static readonly string[] GameBoyExtensions = { ".gb", ".gbc" };
+    private static readonly string[] GameBoyExtensions = [".gb", ".gbc"];
 
     // Game Boy header starts at 0x100, has "Nintendo" signature at 0x104-0x133
     private const int NINTENDO_SIGNATURE_OFFSET = 0x104;

@@ -15,7 +15,7 @@
                 <DashboardCard Grid.Row="0" Grid.Column="0"
                                Header="Library">
                     <StackPanel Spacing="8">
-
+                        <TextBlock Text="Library Content" />
                     </StackPanel>
                 </DashboardCard>
             </Grid>

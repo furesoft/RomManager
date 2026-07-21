@@ -5,7 +5,7 @@ namespace RomManager.Core.RegionDetection;
 
 public class SnesHeaderDetector : RegionDetector
 {
-    private static readonly string[] SnesExtensions = { ".sfc", ".smc", ".fig", ".swc" };
+    private static readonly string[] SnesExtensions = [".sfc", ".smc", ".fig", ".swc"];
 
     public override bool CanDetect(string filePath)
     {

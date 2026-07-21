@@ -9,13 +9,13 @@ namespace RomManager.Core;
 
 public class RomRegionScanner
 {
-    private static readonly string[] CommonRomExtensions = 
-    {
+    private static readonly string[] CommonRomExtensions =
+    [
         ".nes", ".sfc", ".smc", ".fig", ".swc", ".md", ".bin", ".gen",
         ".gb", ".gbc", ".gba", ".z64", ".n64", ".cue", ".iso", ".cdi",
         ".wad", ".elf", ".dol", ".iso", ".gcz", ".rom", ".zip", ".7z",
         ".rar", ".tar", ".gz"
-    };
+    ];
 
     public class RomRegionResult
     {

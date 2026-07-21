@@ -2,11 +2,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:PleasantUI.Controls;assembly=PleasantUI"
              xmlns:converters="using:RomManager.Converters"
              xmlns:models="clr-namespace:RomManager.Models"
              xmlns:viewModels="clr-namespace:RomManager.ViewModels"
              xmlns:regionDetection="clr-namespace:RomManager.Core.RegionDetection"
+             xmlns:controls="clr-namespace:RomManager.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Margin="15"
              x:DataType="viewModels:LibraryPageViewModel"
              x:Class="RomManager.Pages.LibraryPage">
@@ -16,30 +16,28 @@
         <converters:FilterComboBoxItemToTextConverter x:Key="FilterComboBoxItemToTextConverter" />
     </UserControl.Resources>
 
-    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="8">
-        <controls:CommandBar DefaultLabelPosition="Bottom"
+    <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="8">
+        <CommandBar DefaultLabelPosition="Bottom"
                              IsOpen="False"
                              IsSticky="True"
                              OverflowButtonVisibility="Auto">
-            <controls:CommandBarButton Label="Scan"
+            <CommandBarButton Label="Scan"
                                        Icon="{x:Static MaterialIcons.Magnify}" />
-            <controls:CommandBarButton Label="Import" Command="{Binding ImportRomCommand}"
+            <CommandBarButton Label="Import" Command="{Binding ImportRomCommand}"
                                        Icon="{DynamicResource CopyRegular}" />
-            <controls:CommandBarButton Label="Find Duplicates"
+            <CommandBarButton Label="Find Duplicates"
                                        Icon="{DynamicResource EditRegular}" />
+        </CommandBar>
 
-
-        </controls:CommandBar>
-
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="1" Spacing="15">
             <!-- System Filter -->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
-                <TextBlock Text="System: " VerticalAlignment="Center" Margin="0,0,5,0" />
-                <ComboBox ItemsSource="{Binding AvailableSystems}"
-                          PlaceholderText="All"
-                          SelectedItem="{Binding SelectedSystem}"
-                          Width="300">
-                    <ComboBox.ItemTemplate>
+            <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Top" Margin="5,0" ColumnSpacing="8">
+                <TextBlock Grid.Column="0" Text="System: " VerticalAlignment="Top" Margin="0,7,0,0" />
+                <controls:FilterSelector Grid.Column="1"
+                                         HorizontalAlignment="Stretch"
+                                         ItemsSource="{Binding AvailableSystems}"
+                                         SelectedItems="{Binding SelectedSystems, Mode=TwoWay}">
+                    <controls:FilterSelector.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <Image Source="{Binding Converter={StaticResource SystemIconNameToImageConverter}}"
@@ -50,32 +48,62 @@
                                            VerticalAlignment="Center" />
                             </StackPanel>
                         </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </StackPanel>
+                    </controls:FilterSelector.ItemTemplate>
+                </controls:FilterSelector>
+            </Grid>
 
             <!-- Region Filter -->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
-                <TextBlock Text="Region: " VerticalAlignment="Center" Margin="0,0,5,0" />
-                <ComboBox ItemsSource="{Binding AvailableRegions}"
-                          PlaceholderText="All"
-                          SelectedItem="{Binding SelectedRegion}"
-                          Width="120">
-                    <ComboBox.ItemTemplate>
+            <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Top" Margin="5,0" ColumnSpacing="8">
+                <TextBlock Grid.Column="0" Text="Region: " VerticalAlignment="Top" Margin="0,7,0,0" />
+                <controls:FilterSelector Grid.Column="1"
+                                         HorizontalAlignment="Stretch"
+                                         ItemsSource="{Binding AvailableRegions}"
+                                         SelectedItems="{Binding SelectedRegions, Mode=TwoWay}">
+                    <controls:FilterSelector.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource FilterComboBoxItemToTextConverter}}" />
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Border CornerRadius="2" ClipToBounds="True" Width="20" Height="14" VerticalAlignment="Center">
+                                    <Image Source="{Binding Converter={StaticResource RegionToImageConverter}}"
+                                           Stretch="UniformToFill" />
+                                </Border>
+                                <TextBlock Text="{Binding Converter={StaticResource FilterComboBoxItemToTextConverter}}"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
                         </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </StackPanel>
+                    </controls:FilterSelector.ItemTemplate>
+                </controls:FilterSelector>
+            </Grid>
 
-            <TextBlock Text="{Binding GamesView.Count, Mode=TwoWay, StringFormat='{}{0} Games'}" />
+            <!-- Genre Filter -->
+            <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Top" Margin="5,0" ColumnSpacing="8">
+                <TextBlock Grid.Column="0" Text="Genre: " VerticalAlignment="Top" Margin="0,7,0,0" />
+                <controls:FilterSelector Grid.Column="1"
+                                         HorizontalAlignment="Stretch"
+                                         ItemsSource="{Binding AvailableGenres}"
+                                         SelectedItems="{Binding SelectedGenres, Mode=TwoWay}">
+                    <controls:FilterSelector.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource FilterComboBoxItemToTextConverter}}"
+                                       VerticalAlignment="Center" />
+                        </DataTemplate>
+                    </controls:FilterSelector.ItemTemplate>
+                </controls:FilterSelector>
+            </Grid>
+
+            <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Center" Margin="5,0" ColumnSpacing="8">
+                <TextBlock Grid.Column="0" Text="Favourites: " VerticalAlignment="Center" />
+                <ToggleSwitch Grid.Column="1"
+                              HorizontalAlignment="Left"
+                              IsChecked="{Binding FavoritesOnly, Mode=TwoWay}" />
+            </Grid>
+
+            <TextBlock Text="{Binding FilteredGamesCount, Mode=OneWay, StringFormat='{}{0} Games'}" />
         </StackPanel>
 
         <ScrollViewer Grid.Row="2"
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Disabled">
-            <ItemsRepeater ItemsSource="{Binding GamesView}">
+            <ItemsRepeater ItemsSource="{Binding PagedGames}">
                 <ItemsRepeater.Layout>
                     <UniformGridLayout MinItemWidth="120"
                                        MinColumnSpacing="12"
@@ -92,9 +120,7 @@
                                 ClipToBounds="True">
 
                             <Grid RowDefinitions="Auto, Auto, Auto">
-
                                 <Grid Grid.Row="0" Width="110" Height="150" HorizontalAlignment="Center">
-
                                     <Border CornerRadius="6"
                                             ClipToBounds="True"
                                             Background="#202020"
@@ -112,6 +138,7 @@
                                                 <StackPanel Orientation="Horizontal" Spacing="4" />
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
+
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate x:DataType="models:SystemInfo">
                                                 <Border Background="#B31A1A1A"
@@ -126,27 +153,32 @@
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-                                </Grid>
 
-                                <ItemsControl Grid.Row="1"
-                                              ItemsSource="{Binding Regions}"
-                                              HorizontalAlignment="Center"
-                                              Margin="0,8,0,0">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal" Spacing="4" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate x:DataType="regionDetection:Region">
-                                            <Border CornerRadius="2" ClipToBounds="True" Width="20" Height="14" VerticalAlignment="Center">
-                                                <Image Source="{Binding Converter={StaticResource RegionToImageConverter}}"
-                                                       Stretch="UniformToFill"
-                                                       ToolTip.Tip="{Binding}" />
-                                            </Border>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
+                                    <ItemsControl ItemsSource="{Binding Regions}"
+                                                  HorizontalAlignment="Left"
+                                                  VerticalAlignment="Top"
+                                                  Margin="4">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="4" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="regionDetection:Region">
+                                                <Border Background="#B31A1A1A"
+                                                        CornerRadius="4"
+                                                        Padding="4"
+                                                        BoxShadow="0 2 4 0 #30000000">
+                                                    <Image Source="{Binding Converter={StaticResource RegionToImageConverter}}"
+                                                           Width="18" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                           Height="18"
+                                                           ToolTip.Tip="{Binding }" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
 
                                 <TextBlock Grid.Row="2"
                                            Text="{Binding Name}"
@@ -164,5 +196,20 @@
                 </ItemsRepeater.ItemTemplate>
             </ItemsRepeater>
         </ScrollViewer>
+
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="8"
+                    Margin="0,4,0,0">
+            <Button Content="&lt;&lt;" Command="{Binding FirstPageCommand}" IsEnabled="{Binding HasPreviousPage}" />
+            <Button Content="&lt;" Command="{Binding PreviousPageCommand}" IsEnabled="{Binding HasPreviousPage}" />
+            <TextBlock Text="{Binding PageInfo}"
+                       VerticalAlignment="Center"
+                       Margin="8,0" />
+            <Button Content="&gt;" Command="{Binding NextPageCommand}" IsEnabled="{Binding HasNextPage}" />
+            <Button Content="&gt;&gt;" Command="{Binding LastPageCommand}" IsEnabled="{Binding HasNextPage}" />
+        </StackPanel>
     </Grid>
 </UserControl>

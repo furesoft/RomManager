@@ -19,6 +19,7 @@ public partial class Game : ObservableObject
     private IEnumerable<IHasFilename> _files = [];
 
     [ObservableProperty] private IImage? _coverArt;
+    [ObservableProperty] private GameInfo? _info;
 
     [ObservableProperty] private SystemInfo[] _systems;
 
@@ -40,6 +41,8 @@ public partial class Game : ObservableObject
         {
             Regions = RegionDetectorFactory.DetectRegions(romFile.Filename);
         }
+
+        Name = Info!.Name;
     }
 
     public override string ToString()

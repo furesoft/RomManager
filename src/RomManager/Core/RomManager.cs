@@ -21,6 +21,9 @@ public class RomManager
             {
                 return [];
             }
+            system.GameList = GameList.ReadFromFile(system);
+            system.GameList.GamesByFilename = system.GameList.Games
+                .ToDictionary(g => System.IO.Path.GetFileName(g.Path), g => g);
 
             return system.GetGames(pathsConfiguration.Value);
         }).ToList();
