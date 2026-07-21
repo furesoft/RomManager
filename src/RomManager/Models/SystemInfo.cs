@@ -88,17 +88,17 @@ public abstract class SystemInfo
        yield return new RomFile { Filename = romFilename, SystemInfo = this};
 
        var name = System.IO.Path.GetFileNameWithoutExtension(romFilename);
-       var mediaPath = System.IO.Path.Combine(pathsConfiguration.BasePath, pathsConfiguration.Media, Path, "covers");
-       if (!Directory.Exists(mediaPath))
+       var coverPath = System.IO.Path.Combine(pathsConfiguration.BasePath, pathsConfiguration.Media, Path, "covers");
+       if (!Directory.Exists(coverPath))
        {
            yield break;
        }
 
-       var coverArt = Directory.EnumerateFiles(mediaPath, $"{name}.*", SearchOption.AllDirectories).FirstOrDefault();
+       var coverArt = Directory.EnumerateFiles(coverPath, $"{name}.*", SearchOption.AllDirectories).FirstOrDefault();
        if (coverArt is null)
        {
            var normalizedName = NormalizeTitle(name);
-           coverArt = Directory.EnumerateFiles(mediaPath, "*", SearchOption.AllDirectories)
+           coverArt = Directory.EnumerateFiles(coverPath, "*", SearchOption.AllDirectories)
                .FirstOrDefault(file => NormalizeTitle(System.IO.Path.GetFileNameWithoutExtension(file)) == normalizedName);
        }
 
