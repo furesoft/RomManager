@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - release
+      - beta
 
 jobs:
   deploy:
     runs-on: windows-latest
+    environment: ${{ github.ref_name == 'beta' && 'beta' || 'stable' }}
 
     steps:
       - uses: actions/checkout@v4
@@ -25,42 +27,51 @@ jobs:
       - name: Calculate Version
         id: version
         run: |
-          $version = dotnet-gitversion /output json | ConvertFrom-Json | Select-Object -ExpandProperty MajorMinorPatch
+          $baseVersion = dotnet-gitversion /output json | ConvertFrom-Json | Select-Object -ExpandProperty MajorMinorPatch
+          if ("${{ github.ref_name }}" -eq "beta") {
+            $version = "$baseVersion-beta"
+            $updateChannel = "beta"
+          } else {
+            $version = $baseVersion
+            $updateChannel = "stable"
+          }
+
           echo "version=$version" >> $env:GITHUB_OUTPUT
+          echo "update_channel=$updateChannel" >> $env:GITHUB_OUTPUT
           echo "GITVERSION_MAJORMINORPATCH=$version" >> $env:GITHUB_ENV
 
       - name: Build
-        run: dotnet build src/RomManager/RomManager.csproj --configuration Release
+        run: dotnet build src/RomManager/RomManager.csproj --configuration Release /p:Version=${{ steps.version.outputs.version }}
 
       - name: Publish Windows (win-x64)
-        run: dotnet publish src/RomManager/RomManager.csproj --configuration Release --runtime win-x64 --no-self-contained --output ./publish-win
+        run: dotnet publish src/RomManager/RomManager.csproj --configuration Release --runtime win-x64 --no-self-contained --output ./publish-win /p:Version=${{ steps.version.outputs.version }}
 
       - name: Publish Linux (linux-x64)
-        run: dotnet publish src/RomManager/RomManager.csproj --configuration Release --runtime linux-x64 --no-self-contained --output ./publish-linux
+        run: dotnet publish src/RomManager/RomManager.csproj --configuration Release --runtime linux-x64 --no-self-contained --output ./publish-linux /p:Version=${{ steps.version.outputs.version }}
 
       - name: Install Velopack
         run: dotnet tool install --global vpk
 
       - name: Download Old Windows Release
         run: |
-          vpk [win] download github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} -o ./release
+          vpk [win] download github --channel ${{ steps.version.outputs.update_channel }} --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} -o ./release
 
       - name: Download Old Linux Release
         run: |
-          vpk [linux] download github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} -o ./release
+          vpk [linux] download github --channel ${{ steps.version.outputs.update_channel }} --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} -o ./release
 
       - name: Velopack Pack Windows
         run: |
-          vpk [win] pack --packVersion ${{ steps.version.outputs.version }} -u Furesoft_RomManager --packTitle 'Rom Manager' -p ./publish-win --mainExe ./RomManager.exe
+          vpk [win] pack --channel ${{ steps.version.outputs.update_channel }} --packVersion ${{ steps.version.outputs.version }} -u Furesoft_RomManager --packTitle 'Rom Manager' -p ./publish-win --mainExe ./RomManager.exe
 
       - name: Velopack Pack Linux
         run: |
-          vpk [linux] pack --packVersion ${{ steps.version.outputs.version }} -u Furesoft_RomManager --packTitle 'Rom Manager' -p ./publish-linux --mainExe ./RomManager
+          vpk [linux] pack --channel ${{ steps.version.outputs.update_channel }} --packVersion ${{ steps.version.outputs.version }} -u Furesoft_RomManager --packTitle 'Rom Manager' -p ./publish-linux --mainExe ./RomManager
 
       - name: Velopack Upload Windows
         run: |
-          vpk upload github --channel win --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} --releaseName '${{ steps.version.outputs.version }}' --tag v${{ steps.version.outputs.version }} --merge
+          vpk upload github --channel ${{ steps.version.outputs.update_channel }} --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} --releaseName '${{ steps.version.outputs.version }}' --tag v${{ steps.version.outputs.version }} --merge
 
       - name: Velopack Upload Linux
         run: |
-          vpk upload github --channel linux --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} --releaseName '${{ steps.version.outputs.version }}' --tag v${{ steps.version.outputs.version }} --merge
+          vpk upload github --channel ${{ steps.version.outputs.update_channel }} --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} --releaseName '${{ steps.version.outputs.version }}' --tag v${{ steps.version.outputs.version }} --merge
