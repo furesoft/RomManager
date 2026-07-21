@@ -74,6 +74,22 @@
                 </controls:FilterSelector>
             </Grid>
 
+            <!-- Genre Filter -->
+            <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Top" Margin="5,0" ColumnSpacing="8">
+                <TextBlock Grid.Column="0" Text="Genre: " VerticalAlignment="Top" Margin="0,7,0,0" />
+                <controls:FilterSelector Grid.Column="1"
+                                         HorizontalAlignment="Stretch"
+                                         ItemsSource="{Binding AvailableGenres}"
+                                         SelectedItems="{Binding SelectedGenres, Mode=TwoWay}">
+                    <controls:FilterSelector.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource FilterComboBoxItemToTextConverter}}"
+                                       VerticalAlignment="Center" />
+                        </DataTemplate>
+                    </controls:FilterSelector.ItemTemplate>
+                </controls:FilterSelector>
+            </Grid>
+
             <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Center" Margin="5,0" ColumnSpacing="8">
                 <TextBlock Grid.Column="0" Text="Favourites: " VerticalAlignment="Center" />
                 <ToggleSwitch Grid.Column="1"

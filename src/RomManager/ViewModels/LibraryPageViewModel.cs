@@ -21,6 +21,7 @@ public partial class LibraryPageViewModel : ObservableObject
     private readonly INotifyCollectionChanged? _gamesCollectionNotifier;
     [ObservableProperty] private AvaloniaList<SystemInfo>? _selectedSystems = [];
     [ObservableProperty] private AvaloniaList<Region?>? _selectedRegions = [];
+    [ObservableProperty] private AvaloniaList<string?>? _selectedGenres = [];
     [ObservableProperty] private bool _favoritesOnly;
     [ObservableProperty] private int _currentPage = 1;
     [ObservableProperty] private int _pageCount = 1;
@@ -45,6 +46,7 @@ public partial class LibraryPageViewModel : ObservableObject
             .ToArray();
 
         AvailableRegions = Enum.GetValues<Region>().Cast<Region?>().Prepend(null).ToArray();
+        AvailableGenres = BuildAvailableGenres();
 
         GamesView = new DataGridCollectionView(romManager.Games)
         {
@@ -57,6 +59,11 @@ public partial class LibraryPageViewModel : ObservableObject
         };
 
         SelectedRegions!.CollectionChanged += (s, e) =>
+        {
+            RefreshPagedGames(resetToFirstPage: true);
+        };
+
+        SelectedGenres!.CollectionChanged += (s, e) =>
         {
             RefreshPagedGames(resetToFirstPage: true);
         };
@@ -80,6 +87,7 @@ public partial class LibraryPageViewModel : ObservableObject
 
     public SystemInfo?[] AvailableSystems { get; }
     public Region?[] AvailableRegions { get; }
+    public string?[] AvailableGenres { get; private set; }
 
     private bool FilterGames(object obj)
     {
@@ -96,6 +104,18 @@ public partial class LibraryPageViewModel : ObservableObject
 
         var activeRegions = SelectedRegions?.Where(r => r is not null).Select(r => r!.Value).ToArray();
         if (activeRegions is { Length: > 0 } && game.Regions.All(r => !activeRegions.Contains(r)))
+        {
+            return false;
+        }
+
+        var activeGenres = SelectedGenres?
+            .Select(NormalizeGenre)
+            .Where(g => g is not null)
+            .Select(g => g!)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var gameGenre = NormalizeGenre(game.Info?.Genre);
+        if (activeGenres is { Length: > 0 } && (gameGenre is null || !activeGenres.Contains(gameGenre, StringComparer.OrdinalIgnoreCase)))
         {
             return false;
         }
@@ -137,7 +157,26 @@ public partial class LibraryPageViewModel : ObservableObject
 
     private void OnGamesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
+        AvailableGenres = BuildAvailableGenres();
+        OnPropertyChanged(nameof(AvailableGenres));
         RefreshPagedGames(resetToFirstPage: false);
+    }
+
+    private string?[] BuildAvailableGenres()
+    {
+        return RomManager.Games
+            .Select(game => NormalizeGenre(game.Info?.Genre))
+            .Where(genre => genre is not null)
+            .Select(genre => genre!)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(genre => genre, StringComparer.OrdinalIgnoreCase)
+            .Prepend(null)
+            .ToArray();
+    }
+
+    private static string? NormalizeGenre(string? genre)
+    {
+        return string.IsNullOrWhiteSpace(genre) ? null : genre.Trim();
     }
 
     private void RefreshPagedGames(bool resetToFirstPage)
