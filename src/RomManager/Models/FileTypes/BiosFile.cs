@@ -1,6 +1,6 @@
 ﻿namespace RomManager.Models.FileTypes;
 
-public class BiosFile:IFilename
+public class BiosFile:IHasFilename
 {
     public string? Filename { get; set; }
 }
