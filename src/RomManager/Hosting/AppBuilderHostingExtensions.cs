@@ -5,23 +5,19 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RomManager.Configurations;
 using RomManager.Core;
-using RomManager.Models;
-using RomManager.Systems;
 using RomManager.ViewModels;
 
 namespace RomManager.Hosting;
 
 public static partial class AppBuilderHostingExtensions
 {
-    public static AppBuilder UseMicrosoftHosting(this AppBuilder appBuilder, string[] args, Action<HostApplicationBuilder>? configureHost = null)
+    public static AppBuilder UseMicrosoftHosting(this AppBuilder appBuilder, string[] args,
+        Action<HostApplicationBuilder>? configureHost = null)
     {
         ArgumentNullException.ThrowIfNull(appBuilder);
         ArgumentNullException.ThrowIfNull(args);
 
-        if (Design.IsDesignMode)
-        {
-            return appBuilder;
-        }
+        if (Design.IsDesignMode) return appBuilder;
 
         var hostBuilder = Host.CreateApplicationBuilder(args);
         hostBuilder.Services

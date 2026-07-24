@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media;
-using Avalonia.Media.Imaging;
 using Microsoft.Extensions.DependencyInjection;
 using PleasantUI.Controls;
 using RomManager.Core;
@@ -13,22 +12,14 @@ namespace RomManager;
 
 public class SplashScreen : IPleasantSplashScreen
 {
+    private static readonly ProgressBar _progressBar = new() { IsIndeterminate = true };
+    private static readonly TextBlock _infoText = new() { Text = "Loading...", FontSize = 24 };
     public IBrush? Background { get; } = new SolidColorBrush(Color.Parse("#2D2D2D"));
     public int MinimumShowTime { get; } = 4000;
     public IImage? AppIcon { get; }
     public string? AppName { get; } = "Rom Manager";
 
-    private static readonly ProgressBar _progressBar = new() { IsIndeterminate = true };
-    private static readonly TextBlock _infoText = new() { Text = "Loading...", FontSize = 24 };
-
-    public object? SplashScreenContent { get; } = new StackPanel
-    {
-        Children =
-        {
-            _infoText,
-            _progressBar
-        }
-    };
+    public object? SplashScreenContent { get; } = new StackPanel { Children = { _infoText, _progressBar } };
 
     public async Task RunTasks(CancellationToken cancellationToken)
     {

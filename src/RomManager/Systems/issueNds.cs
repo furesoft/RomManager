@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class issueNds: SystemInfo
+public class issueNds : SystemInfo
 {
     public override string Name => "Nintendo DS";
     public override string Path => "nds";

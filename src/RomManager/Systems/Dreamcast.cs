@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Dreamcast: SystemInfo
+public class Dreamcast : SystemInfo
 {
     public override string Name => "Sega Dreamcast";
     public override string Path => "dc";

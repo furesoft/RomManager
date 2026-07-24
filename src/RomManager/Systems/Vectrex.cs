@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Vectrex: SystemInfo
+public class Vectrex : SystemInfo
 {
     public override string Name => "Vectrex";
     public override string Path => "vectrex";

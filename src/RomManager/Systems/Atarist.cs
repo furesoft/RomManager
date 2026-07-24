@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Atarist: SystemInfo
+public class Atarist : SystemInfo
 {
     public override string Name => "Atarist";
     public override string Path => "atarist";

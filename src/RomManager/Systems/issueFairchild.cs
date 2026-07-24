@@ -2,7 +2,7 @@ using RomManager.Models;
 
 namespace RomManager.Systems;
 
-public class issueFairchild: SystemInfo
+public class issueFairchild : SystemInfo
 {
     public override string Name => "Fairchild Channel F";
     public override string Path => "fairchild";

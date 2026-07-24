@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Doom: SystemInfo
+public class Doom : SystemInfo
 {
     public override string Name => "Doom";
     public override string Path => "doom";

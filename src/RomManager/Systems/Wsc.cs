@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Wsc: SystemInfo
+public class Wsc : SystemInfo
 {
     public override string Name => "Bandai WonderSwan Color";
     public override string Path => "wsc";

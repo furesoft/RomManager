@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Neogeocd: SystemInfo
+public class Neogeocd : SystemInfo
 {
     public override string Name => "SNK Neo Geo CD";
     public override string Path => "neocd";

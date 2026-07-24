@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -10,16 +11,10 @@ public class GenesisHeaderDetector : RegionDetector
 
     public override bool CanDetect(string filePath)
     {
-        if (!base.CanDetect(filePath))
-        {
-            return false;
-        }
+        if (!base.CanDetect(filePath)) return false;
 
         var extension = Path.GetExtension(filePath).ToLower();
-        if (!GenesisExtensions.Contains(extension))
-        {
-            return false;
-        }
+        if (!GenesisExtensions.Contains(extension)) return false;
 
         // Additional check: try to find SEGA signature
         return HasSegaSignature(filePath);
@@ -31,10 +26,7 @@ public class GenesisHeaderDetector : RegionDetector
         {
             using (var file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
-                if (file.Length < 0x110)
-                {
-                    return false;
-                }
+                if (file.Length < 0x110) return false;
 
                 file.Seek(0x100, SeekOrigin.Begin);
                 var buffer = new byte[4];
@@ -56,33 +48,25 @@ public class GenesisHeaderDetector : RegionDetector
         {
             using (var file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
-                if (file.Length < 0x1F0 + 2)
-                {
-                    return [];
-                }
+                if (file.Length < 0x1F0 + 2) return [];
 
                 // Region codes are at 0x1F0 (Domestic Code) and 0x1F1 (International Code)
                 file.Seek(0x1F0, SeekOrigin.Begin);
                 var domesticCode = (char)file.ReadByte();
                 var internationalCode = (char)file.ReadByte();
 
-                var regions = new System.Collections.Generic.HashSet<Region>();
+                var regions = new HashSet<Region>();
 
                 // Parse domestic code
-                if (RegionCodeToRegion(domesticCode) != Region.Unknown)
-                {
-                    regions.Add(RegionCodeToRegion(domesticCode));
-                }
+                if (RegionCodeToRegion(domesticCode) != Region.Unknown) regions.Add(RegionCodeToRegion(domesticCode));
 
                 // Parse international code
                 if (RegionCodeToRegion(internationalCode) != Region.Unknown)
-                {
                     regions.Add(RegionCodeToRegion(internationalCode));
-                }
 
                 if (regions.Count > 0)
                 {
-                    var result = new System.Collections.Generic.List<Region>(regions);
+                    var result = new List<Region>(regions);
                     result.Sort();
                     return result.ToArray();
                 }

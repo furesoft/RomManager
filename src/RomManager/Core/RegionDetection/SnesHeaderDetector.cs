@@ -9,10 +9,7 @@ public class SnesHeaderDetector : RegionDetector
 
     public override bool CanDetect(string filePath)
     {
-        if (!base.CanDetect(filePath))
-        {
-            return false;
-        }
+        if (!base.CanDetect(filePath)) return false;
 
         var extension = Path.GetExtension(filePath).ToLower();
         return SnesExtensions.Contains(extension);
@@ -27,17 +24,11 @@ public class SnesHeaderDetector : RegionDetector
                 // SNES ROMs can have headers at different positions
                 // Try to detect the header position first
                 var headerOffset = DetectHeaderOffset(file);
-                if (headerOffset < 0)
-                {
-                    return [];
-                }
+                if (headerOffset < 0) return [];
 
                 // Country code is at position 0x19 (25) in the extended header
                 var countryCodeOffset = headerOffset + 0x19;
-                if (countryCodeOffset + 1 > file.Length)
-                {
-                    return [];
-                }
+                if (countryCodeOffset + 1 > file.Length) return [];
 
                 file.Seek(countryCodeOffset, SeekOrigin.Begin);
                 var countryCode = file.ReadByte();
@@ -58,22 +49,14 @@ public class SnesHeaderDetector : RegionDetector
         var fileSize = file.Length;
 
         // If file size is divisible by 0x2000, it likely has a header
-        if ((fileSize & 0x1FFF) == 0x200)
-        {
-            return 0x100; // Header at 0x100
-        }
+        if ((fileSize & 0x1FFF) == 0x200) return 0x100; // Header at 0x100
 
         // Standard positions for SNES header
         if (fileSize >= 0x10000)
-        {
             // Try 0xFFB0 first (more common)
             return 0xFFB0;
-        }
 
-        if (fileSize >= 0x8000)
-        {
-            return 0x7FB0;
-        }
+        if (fileSize >= 0x8000) return 0x7FB0;
 
         return -1;
     }

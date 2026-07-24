@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Sfc: SystemInfo
+public class Sfc : SystemInfo
 {
     public override string Name => "Super Famicom";
     public override string Path => "sfc";

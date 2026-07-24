@@ -12,19 +12,19 @@
                 MinWidth="600" MinHeight="500" Width="1200" Height="700">
     <Panel>
         <NavigationView x:Name="MainNavigationView" AlwaysOpen="True" IsOpen="True" BindWindowSettings="True">
-                <NavigationViewItem Header="Home" Margin="0,0,0,5"
-                                    Icon="{x:Static MaterialIcons.ViewDashboard}">
-                    <NavigationViewItem.Content>
-                        <pages:HomePage />
-                    </NavigationViewItem.Content>
-                </NavigationViewItem>
+            <NavigationViewItem Header="Home" Margin="0,0,0,5"
+                                Icon="{x:Static MaterialIcons.ViewDashboard}">
+                <NavigationViewItem.Content>
+                    <pages:HomePage />
+                </NavigationViewItem.Content>
+            </NavigationViewItem>
 
-                <NavigationViewItem Header="Library" Margin="0,0,0,5"
-                                    Icon="{x:Static MaterialIcons.Library}">
-                    <NavigationViewItem.Content>
-                        <pages:LibraryPage />
-                    </NavigationViewItem.Content>
-                </NavigationViewItem>
+            <NavigationViewItem Header="Library" Margin="0,0,0,5"
+                                Icon="{x:Static MaterialIcons.Library}">
+                <NavigationViewItem.Content>
+                    <pages:LibraryPage />
+                </NavigationViewItem.Content>
+            </NavigationViewItem>
 
 
             <NavigationViewItem Header="Settings" DockPanel.Dock="Bottom"

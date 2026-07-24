@@ -18,18 +18,18 @@
 
     <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="8">
         <CommandBar DefaultLabelPosition="Bottom"
-                             IsOpen="False"
-                             IsSticky="True"
-                             OverflowButtonVisibility="Auto">
+                    IsOpen="False"
+                    IsSticky="True"
+                    OverflowButtonVisibility="Auto">
             <CommandBarButton Label="Scan"
-                                       Icon="{x:Static MaterialIcons.Magnify}" />
+                              Icon="{x:Static MaterialIcons.Magnify}" />
             <CommandBarButton Label="Import" Command="{Binding ImportRomCommand}"
-                                       Icon="{DynamicResource CopyRegular}" />
+                              Icon="{DynamicResource CopyRegular}" />
             <CommandBarButton Label="Find Duplicates"
-                                       Icon="{DynamicResource EditRegular}" />
+                              Icon="{DynamicResource EditRegular}" />
         </CommandBar>
 
-        <UniformGrid Grid.Row="1"  Columns="2" ColumnSpacing="12" RowSpacing="8">
+        <UniformGrid Grid.Row="1" Columns="2" ColumnSpacing="12" RowSpacing="8">
             <!-- System Filter -->
             <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Top" Margin="5,0" ColumnSpacing="8">
                 <TextBlock Grid.Column="0" Text="System: " VerticalAlignment="Top" Margin="0,7,0,0" />
@@ -44,8 +44,9 @@
                                        Width="16"
                                        Height="16"
                                        VerticalAlignment="Center" />
-                                <TextBlock Text="{Binding Converter={StaticResource FilterComboBoxItemToTextConverter}}"
-                                           VerticalAlignment="Center" />
+                                <TextBlock
+                                    Text="{Binding Converter={StaticResource FilterComboBoxItemToTextConverter}}"
+                                    VerticalAlignment="Center" />
                             </StackPanel>
                         </DataTemplate>
                     </controls:FilterSelector.ItemTemplate>
@@ -62,12 +63,14 @@
                     <controls:FilterSelector.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Border CornerRadius="2" ClipToBounds="True" Width="20" Height="14" VerticalAlignment="Center">
+                                <Border CornerRadius="2" ClipToBounds="True" Width="20" Height="14"
+                                        VerticalAlignment="Center">
                                     <Image Source="{Binding Converter={StaticResource RegionToImageConverter}}"
                                            Stretch="UniformToFill" />
                                 </Border>
-                                <TextBlock Text="{Binding Converter={StaticResource FilterComboBoxItemToTextConverter}}"
-                                           VerticalAlignment="Center" />
+                                <TextBlock
+                                    Text="{Binding Converter={StaticResource FilterComboBoxItemToTextConverter}}"
+                                    VerticalAlignment="Center" />
                             </StackPanel>
                         </DataTemplate>
                     </controls:FilterSelector.ItemTemplate>
@@ -145,10 +148,12 @@
                                                         CornerRadius="4"
                                                         Padding="4"
                                                         BoxShadow="0 2 4 0 #30000000">
-                                                    <Image Source="{Binding Converter={StaticResource SystemIconNameToImageConverter}}"
-                                                           Width="18" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                           Height="18"
-                                                           ToolTip.Tip="{Binding Name}" />
+                                                    <Image
+                                                        Source="{Binding Converter={StaticResource SystemIconNameToImageConverter}}"
+                                                        Width="18" HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Height="18"
+                                                        ToolTip.Tip="{Binding Name}" />
                                                 </Border>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
@@ -170,10 +175,12 @@
                                                         CornerRadius="4"
                                                         Padding="4"
                                                         BoxShadow="0 2 4 0 #30000000">
-                                                    <Image Source="{Binding Converter={StaticResource RegionToImageConverter}}"
-                                                           Width="18" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                                           Height="18"
-                                                           ToolTip.Tip="{Binding }" />
+                                                    <Image
+                                                        Source="{Binding Converter={StaticResource RegionToImageConverter}}"
+                                                        Width="18" HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Height="18"
+                                                        ToolTip.Tip="{Binding }" />
                                                 </Border>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>

@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Pico8: SystemInfo
+public class Pico8 : SystemInfo
 {
     public override string Name => "Sega Pico";
     public override string Path => "pico";

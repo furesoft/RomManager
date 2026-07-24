@@ -17,19 +17,6 @@ public class RomRegionScanner
         ".rar", ".tar", ".gz"
     ];
 
-    public class RomRegionResult
-    {
-        public required string FilePath { get; set; }
-        public required string FileName { get; set; }
-        public required Region[] Regions { get; set; }
-        public bool HasMultipleRegions { get; set; }
-        public long FileSize { get; set; }
-    }
-
-    public RomRegionScanner()
-    {
-    }
-
     public List<RomRegionResult> ScanDirectory(string directoryPath)
     {
         var results = new List<RomRegionResult>();
@@ -51,7 +38,6 @@ public class RomRegionScanner
             Console.WriteLine($"Found {files.Count} potential ROM files");
 
             foreach (var file in files)
-            {
                 try
                 {
                     var regions = RegionDetectorFactory.DetectRegions(file);
@@ -70,7 +56,6 @@ public class RomRegionScanner
                 {
                     Console.WriteLine($"Error processing file {file}: {ex.Message}");
                 }
-            }
         }
         catch (Exception ex)
         {
@@ -90,43 +75,28 @@ public class RomRegionScanner
 
         // Statistics
         var regionStats = new Dictionary<Region, int>();
-        foreach (var region in Enum.GetValues(typeof(Region)).Cast<Region>())
-        {
-            regionStats[region] = 0;
-        }
+        foreach (var region in Enum.GetValues(typeof(Region)).Cast<Region>()) regionStats[region] = 0;
 
         foreach (var result in results)
-        {
-            foreach (var region in result.Regions)
-            {
-                if (regionStats.ContainsKey(region))
-                {
-                    regionStats[region]++;
-                }
-            }
-        }
+        foreach (var region in result.Regions)
+            if (regionStats.ContainsKey(region))
+                regionStats[region]++;
 
         sb.AppendLine("--- Region Statistics ---");
         foreach (var stat in regionStats.OrderByDescending(x => x.Value))
-        {
             sb.AppendLine($"{stat.Key}: {stat.Value} ROMs");
-        }
 
         sb.AppendLine();
         sb.AppendLine("--- Multi-Region ROMs ---");
         var multiRegionRoms = results.Where(r => r.HasMultipleRegions).ToList();
         if (multiRegionRoms.Count > 0)
-        {
             foreach (var rom in multiRegionRoms.OrderBy(r => r.FileName))
             {
                 var regions = string.Join(", ", rom.Regions);
                 sb.AppendLine($"  {rom.FileName}: [{regions}]");
             }
-        }
         else
-        {
             sb.AppendLine("  No multi-region ROMs detected");
-        }
 
         sb.AppendLine();
         sb.AppendLine("--- Unknown Region ROMs ---");
@@ -134,14 +104,9 @@ public class RomRegionScanner
         if (unknownRoms.Count > 0)
         {
             foreach (var rom in unknownRoms.Take(20).OrderBy(r => r.FileName))
-            {
                 sb.AppendLine($"  {rom.FileName} ({Path.GetExtension(rom.FilePath)})");
-            }
 
-            if (unknownRoms.Count > 20)
-            {
-                sb.AppendLine($"  ... and {unknownRoms.Count - 20} more");
-            }
+            if (unknownRoms.Count > 20) sb.AppendLine($"  ... and {unknownRoms.Count - 20} more");
         }
         else
         {
@@ -157,11 +122,17 @@ public class RomRegionScanner
             sb.AppendLine($"  {result.FileName,-50} [{regions,-35}] {sizeMB:F2} MB");
         }
 
-        if (results.Count > 50)
-        {
-            sb.AppendLine($"  ... and {results.Count - 50} more");
-        }
+        if (results.Count > 50) sb.AppendLine($"  ... and {results.Count - 50} more");
 
         return sb.ToString();
+    }
+
+    public class RomRegionResult
+    {
+        public required string FilePath { get; set; }
+        public required string FileName { get; set; }
+        public required Region[] Regions { get; set; }
+        public bool HasMultipleRegions { get; set; }
+        public long FileSize { get; set; }
     }
 }

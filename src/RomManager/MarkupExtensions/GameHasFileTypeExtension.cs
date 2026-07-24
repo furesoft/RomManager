@@ -40,10 +40,8 @@ public sealed class GameHasFileTypeExtension : MarkupExtension
 
         public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value is not Game game || parameter is not Type fileType || !typeof(IHasFilename).IsAssignableFrom(fileType))
-            {
-                return false;
-            }
+            if (value is not Game game || parameter is not Type fileType ||
+                !typeof(IHasFilename).IsAssignableFrom(fileType)) return false;
 
             return game.Files.Any(file => fileType.IsAssignableFrom(file.GetType()));
         }

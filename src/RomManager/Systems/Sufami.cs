@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Sufami: SystemInfo
+public class Sufami : SystemInfo
 {
     public override string Name => "Sufami Turbo";
     public override string Path => "sufami";

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,10 +28,7 @@ public class FilenameRegionDetector : IRegionDetector
 
     public Region[] Detect(string filePath)
     {
-        if (!CanDetect(filePath))
-        {
-            return [Region.Unknown];
-        }
+        if (!CanDetect(filePath)) return [Region.Unknown];
 
         var filename = Path.GetFileNameWithoutExtension(filePath);
         var detectedRegions = new HashSet<Region>();
@@ -43,17 +39,10 @@ public class FilenameRegionDetector : IRegionDetector
             // World version detected - could be multiple regions
             // Try to detect specific regions too
             foreach (var (region, patterns) in RegionPatterns)
-            {
                 if (patterns.Any(p => Regex.IsMatch(filename, p, RegexOptions.IgnoreCase)))
-                {
                     detectedRegions.Add(region);
-                }
-            }
 
-            if (detectedRegions.Count > 0)
-            {
-                return detectedRegions.OrderBy(r => r).ToArray();
-            }
+            if (detectedRegions.Count > 0) return detectedRegions.OrderBy(r => r).ToArray();
 
             // If no specific regions found with World tag, return World detected as multiple regions
             return [Region.USA, Region.Europe, Region.Japan];
@@ -61,15 +50,11 @@ public class FilenameRegionDetector : IRegionDetector
 
         // Check for specific region patterns
         foreach (var (region, patterns) in RegionPatterns)
-        {
             if (patterns.Any(p => Regex.IsMatch(filename, p, RegexOptions.IgnoreCase)))
-            {
                 detectedRegions.Add(region);
-            }
-        }
 
-        return detectedRegions.Count > 0 
-            ? detectedRegions.OrderBy(r => r).ToArray() 
+        return detectedRegions.Count > 0
+            ? detectedRegions.OrderBy(r => r).ToArray()
             : [Region.Unknown];
     }
 }

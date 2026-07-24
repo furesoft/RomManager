@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Vdp: SystemInfo
+public class Vdp : SystemInfo
 {
     public override string Name => "Video Dynamic Processor";
     public override string Path => "vdp";

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Collections;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -19,26 +20,23 @@ public partial class LibraryPageViewModel : ObservableObject
 {
     private readonly FilenameFilterBuilder _filenameFilterBuilder;
     private readonly INotifyCollectionChanged? _gamesCollectionNotifier;
-    [ObservableProperty] private AvaloniaList<SystemInfo>? _selectedSystems = [];
-    [ObservableProperty] private AvaloniaList<Region?>? _selectedRegions = [];
-    [ObservableProperty] private AvaloniaList<string?>? _selectedGenres = [];
-    [ObservableProperty] private bool _favoritesOnly;
     [ObservableProperty] private int _currentPage = 1;
+    [ObservableProperty] private bool _favoritesOnly;
+    [ObservableProperty] private int _filteredGamesCount;
     [ObservableProperty] private int _pageCount = 1;
     [ObservableProperty] private int _pageSize = 30;
-    [ObservableProperty] private int _filteredGamesCount;
+    [ObservableProperty] private AvaloniaList<string?>? _selectedGenres = [];
+    [ObservableProperty] private AvaloniaList<Region?>? _selectedRegions = [];
+    [ObservableProperty] private AvaloniaList<SystemInfo>? _selectedSystems = [];
 
-    public LibraryPageViewModel(Core.RomManager romManager, FilenameFilterBuilder filenameFilterBuilder, IOptions<PathsConfiguration> pathsConfiguration)
+    public LibraryPageViewModel(Core.RomManager romManager, FilenameFilterBuilder filenameFilterBuilder,
+        IOptions<PathsConfiguration> pathsConfiguration)
     {
         _filenameFilterBuilder = filenameFilterBuilder;
         RomManager = romManager;
 
         AvailableSystems = romManager.Systems
-            .Select(system => new
-            {
-                System = system,
-                HasGames = system.HasGames(pathsConfiguration.Value)
-            })
+            .Select(system => new { System = system, HasGames = system.HasGames(pathsConfiguration.Value) })
             .OrderByDescending(item => item.HasGames)
             .ThenBy(item => item.System.Name)
             .Select(item => (SystemInfo?)item.System)
@@ -48,33 +46,28 @@ public partial class LibraryPageViewModel : ObservableObject
         AvailableRegions = Enum.GetValues<Region>().Cast<Region?>().Prepend(null).ToArray();
         AvailableGenres = BuildAvailableGenres();
 
-        GamesView = new DataGridCollectionView(romManager.Games)
-        {
-            Filter = FilterGames
-        };
+        GamesView = new DataGridCollectionView(romManager.Games) { Filter = FilterGames };
 
         SelectedSystems!.CollectionChanged += (s, e) =>
         {
-            RefreshPagedGames(resetToFirstPage: true);
+            RefreshPagedGames(true);
         };
 
         SelectedRegions!.CollectionChanged += (s, e) =>
         {
-            RefreshPagedGames(resetToFirstPage: true);
+            RefreshPagedGames(true);
         };
 
         SelectedGenres!.CollectionChanged += (s, e) =>
         {
-            RefreshPagedGames(resetToFirstPage: true);
+            RefreshPagedGames(true);
         };
 
         _gamesCollectionNotifier = romManager.Games as INotifyCollectionChanged;
         if (_gamesCollectionNotifier is not null)
-        {
             _gamesCollectionNotifier.CollectionChanged += OnGamesCollectionChanged;
-        }
 
-        RefreshPagedGames(resetToFirstPage: true);
+        RefreshPagedGames(true);
     }
 
     public Core.RomManager RomManager { get; }
@@ -91,22 +84,13 @@ public partial class LibraryPageViewModel : ObservableObject
 
     private bool FilterGames(object obj)
     {
-        if (obj is not Game game)
-        {
-            return false;
-        }
+        if (obj is not Game game) return false;
 
         var activeSystems = SelectedSystems?.Where(s => s is not null).ToArray();
-        if (activeSystems is { Length: > 0 } && game.Systems.All(s => !activeSystems.Contains(s)))
-        {
-            return false;
-        }
+        if (activeSystems is { Length: > 0 } && game.Systems.All(s => !activeSystems.Contains(s))) return false;
 
         var activeRegions = SelectedRegions?.Where(r => r is not null).Select(r => r!.Value).ToArray();
-        if (activeRegions is { Length: > 0 } && game.Regions.All(r => !activeRegions.Contains(r)))
-        {
-            return false;
-        }
+        if (activeRegions is { Length: > 0 } && game.Regions.All(r => !activeRegions.Contains(r))) return false;
 
         var activeGenres = SelectedGenres?
             .Select(NormalizeGenre)
@@ -115,22 +99,17 @@ public partial class LibraryPageViewModel : ObservableObject
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToArray();
         var gameGenre = NormalizeGenre(game.Info?.Genre);
-        if (activeGenres is { Length: > 0 } && (gameGenre is null || !activeGenres.Contains(gameGenre, StringComparer.OrdinalIgnoreCase)))
-        {
-            return false;
-        }
+        if (activeGenres is { Length: > 0 } &&
+            (gameGenre is null || !activeGenres.Contains(gameGenre, StringComparer.OrdinalIgnoreCase))) return false;
 
-        if (FavoritesOnly && game.Info?.IsFavorite != true)
-        {
-            return false;
-        }
+        if (FavoritesOnly && game.Info?.IsFavorite != true) return false;
 
         return true;
     }
 
     partial void OnFavoritesOnlyChanged(bool value)
     {
-        RefreshPagedGames(resetToFirstPage: true);
+        RefreshPagedGames(true);
     }
 
     partial void OnCurrentPageChanged(int value)
@@ -147,7 +126,7 @@ public partial class LibraryPageViewModel : ObservableObject
             return;
         }
 
-        RefreshPagedGames(resetToFirstPage: false);
+        RefreshPagedGames(false);
     }
 
     partial void OnPageCountChanged(int value)
@@ -159,7 +138,7 @@ public partial class LibraryPageViewModel : ObservableObject
     {
         AvailableGenres = BuildAvailableGenres();
         OnPropertyChanged(nameof(AvailableGenres));
-        RefreshPagedGames(resetToFirstPage: false);
+        RefreshPagedGames(false);
     }
 
     private string?[] BuildAvailableGenres()
@@ -186,20 +165,11 @@ public partial class LibraryPageViewModel : ObservableObject
         FilteredGamesCount = filteredGames.Length;
 
         var newPageCount = Math.Max(1, (int)Math.Ceiling(FilteredGamesCount / (double)PageSize));
-        if (PageCount != newPageCount)
-        {
-            PageCount = newPageCount;
-        }
+        if (PageCount != newPageCount) PageCount = newPageCount;
 
-        if (resetToFirstPage)
-        {
-            CurrentPage = 1;
-        }
+        if (resetToFirstPage) CurrentPage = 1;
 
-        if (CurrentPage > PageCount)
-        {
-            CurrentPage = PageCount;
-        }
+        if (CurrentPage > PageCount) CurrentPage = PageCount;
 
         var skip = (CurrentPage - 1) * PageSize;
         PagedGames.Clear();
@@ -223,19 +193,13 @@ public partial class LibraryPageViewModel : ObservableObject
     [RelayCommand]
     private void PreviousPage()
     {
-        if (CurrentPage > 1)
-        {
-            CurrentPage--;
-        }
+        if (CurrentPage > 1) CurrentPage--;
     }
 
     [RelayCommand]
     private void NextPage()
     {
-        if (CurrentPage < PageCount)
-        {
-            CurrentPage++;
-        }
+        if (CurrentPage < PageCount) CurrentPage++;
     }
 
     [RelayCommand]
@@ -248,12 +212,13 @@ public partial class LibraryPageViewModel : ObservableObject
     public async Task ImportRom()
     {
         var app = App.Current ?? throw new InvalidOperationException("Application instance is not available.");
-        var mainWindow = app.ApplicationLifetime is Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime desktop
+        var mainWindow = app.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
             ? desktop.MainWindow
             : null;
 
-        var topLevel = TopLevel.GetTopLevel(mainWindow) ?? throw new InvalidOperationException("Top-level window is not available.");
-        _ = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
+        var topLevel = TopLevel.GetTopLevel(mainWindow) ??
+                       throw new InvalidOperationException("Top-level window is not available.");
+        _ = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
             AllowMultiple = false,
             Title = "Select ROM to Import",

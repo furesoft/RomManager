@@ -4,7 +4,7 @@ using RomManager.Configurations;
 
 namespace RomManager.ViewModels;
 
-public partial class HomePageViewModel : ObservableObject
+public class HomePageViewModel : ObservableObject
 {
     public HomePageViewModel(IOptions<PathsConfiguration> pathsOptions)
     {

@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Sgfx: SystemInfo
+public class Sgfx : SystemInfo
 {
     public override string Name => "SuperGrafx";
     public override string Path => "sgfx";

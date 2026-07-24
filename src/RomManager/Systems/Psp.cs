@@ -2,7 +2,7 @@ using RomManager.Models;
 
 namespace RomManager.Systems;
 
-public class Psp: SystemInfo
+public class Psp : SystemInfo
 {
     public override string Name => "PlayStation Portable";
     public override string Path => "psp";

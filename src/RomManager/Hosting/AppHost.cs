@@ -9,7 +9,8 @@ internal static class AppHost
 {
     private static IHost? _host;
 
-    public static IHost Host => _host ?? throw new InvalidOperationException("The application host has not been initialized.");
+    public static IHost Host =>
+        _host ?? throw new InvalidOperationException("The application host has not been initialized.");
 
     public static IServiceProvider Services => Host.Services;
 

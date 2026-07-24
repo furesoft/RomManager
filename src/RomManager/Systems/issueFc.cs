@@ -2,7 +2,7 @@ using RomManager.Models;
 
 namespace RomManager.Systems;
 
-public class issueFc: SystemInfo
+public class issueFc : SystemInfo
 {
     public override string Name => "Family Computer";
     public override string Path => "fc";

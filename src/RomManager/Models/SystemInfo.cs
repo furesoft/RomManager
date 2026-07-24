@@ -30,10 +30,7 @@ public abstract class SystemInfo
 
     public bool HasGames(PathsConfiguration pathsConfiguration)
     {
-        if (!IsReachable(pathsConfiguration))
-        {
-            return false;
-        }
+        if (!IsReachable(pathsConfiguration)) return false;
 
         var folderPath = System.IO.Path.Combine(pathsConfiguration.BasePath, pathsConfiguration.Roms, Path);
 
@@ -51,10 +48,7 @@ public abstract class SystemInfo
 
     public List<Game> GetGames(PathsConfiguration pathsConfiguration)
     {
-        if (!IsReachable(pathsConfiguration))
-        {
-            return [];
-        }
+        if (!IsReachable(pathsConfiguration)) return [];
 
         var folderPath = System.IO.Path.Combine(pathsConfiguration.BasePath, pathsConfiguration.Roms, Path);
 
@@ -72,15 +66,9 @@ public abstract class SystemInfo
     {
         GameInfo gameInfo;
         if (!GameList.GamesByFilename.TryGetValue(System.IO.Path.GetFileName(file), out gameInfo))
-        {
             gameInfo = new GameInfo { Path = file, Name = System.IO.Path.GetFileNameWithoutExtension(file) };
-        }
 
-        return new Game
-        {
-            Info = gameInfo,
-            Files = GetFiles(pathsConfiguration, file).ToArray()
-        };
+        return new Game { Info = gameInfo, Files = GetFiles(pathsConfiguration, file).ToArray() };
     }
 
     private IEnumerable<IHasFilename> GetFiles(PathsConfiguration pathsConfiguration, string romFilename)
@@ -89,18 +77,12 @@ public abstract class SystemInfo
 
         var name = System.IO.Path.GetFileNameWithoutExtension(romFilename);
         var mediaPath = System.IO.Path.Combine(pathsConfiguration.BasePath, pathsConfiguration.Media, Path);
-        if (!Directory.Exists(mediaPath))
-        {
-            yield break;
-        }
+        if (!Directory.Exists(mediaPath)) yield break;
 
         foreach (var mediaType in GetMediaTypes())
         {
             var file = FindMediaFile(mediaPath, mediaType.Directories, name);
-            if (file is not null)
-            {
-                yield return mediaType.Factory(file);
-            }
+            if (file is not null) yield return mediaType.Factory(file);
         }
     }
 
@@ -119,10 +101,7 @@ public abstract class SystemInfo
         foreach (var mediaDirectory in mediaDirectories)
         {
             var mediaDirectoryPath = System.IO.Path.Combine(mediaPath, mediaDirectory);
-            if (!Directory.Exists(mediaDirectoryPath))
-            {
-                continue;
-            }
+            if (!Directory.Exists(mediaDirectoryPath)) continue;
 
             var exactPattern = mediaDirectory.Equals("states", StringComparison.OrdinalIgnoreCase)
                 ? $"{romName}.auto.state"
@@ -130,10 +109,7 @@ public abstract class SystemInfo
 
             var exactMatch = Directory.EnumerateFiles(mediaDirectoryPath, exactPattern, SearchOption.AllDirectories)
                 .FirstOrDefault();
-            if (exactMatch is not null)
-            {
-                return exactMatch;
-            }
+            if (exactMatch is not null) return exactMatch;
 
             var normalizedRomName = NormalizeTitle(romName);
             var normalizedMatch = Directory.EnumerateFiles(mediaDirectoryPath, "*", SearchOption.AllDirectories)
@@ -148,10 +124,7 @@ public abstract class SystemInfo
                     return NormalizeTitle(baseName) == normalizedRomName;
                 });
 
-            if (normalizedMatch is not null)
-            {
-                return normalizedMatch;
-            }
+            if (normalizedMatch is not null) return normalizedMatch;
         }
 
         return null;
@@ -161,12 +134,8 @@ public abstract class SystemInfo
     {
         var result = new StringBuilder(title.Length);
         foreach (var character in title)
-        {
             if (char.IsLetterOrDigit(character))
-            {
                 result.Append(char.ToLowerInvariant(character));
-            }
-        }
 
         return result.ToString();
     }

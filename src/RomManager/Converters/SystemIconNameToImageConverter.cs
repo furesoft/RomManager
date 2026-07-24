@@ -22,18 +22,12 @@ public sealed class SystemIconNameToImageConverter : IValueConverter
             _ => null
         };
 
-        if (string.IsNullOrWhiteSpace(iconName))
-        {
-            return null;
-        }
+        if (string.IsNullOrWhiteSpace(iconName)) return null;
 
         return IconCache.GetOrAdd(iconName, static name =>
         {
             var uri = new Uri($"avares://RomManager/Assets/Icons/Systems/{name}");
-            if (!AssetLoader.Exists(uri))
-            {
-                return null;
-            }
+            if (!AssetLoader.Exists(uri)) return null;
 
             using var stream = AssetLoader.Open(uri);
             return new Bitmap(stream);

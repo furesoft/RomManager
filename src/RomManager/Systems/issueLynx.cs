@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class issueLynx: SystemInfo
+public class issueLynx : SystemInfo
 {
     public override string Name => "Atari Lynx";
     public override string Path => "lynx";

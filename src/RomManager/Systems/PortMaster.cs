@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class PortMaster: SystemInfo
+public class PortMaster : SystemInfo
 {
     public override string Name => "Linux Ports";
     public override string Path => "ports";

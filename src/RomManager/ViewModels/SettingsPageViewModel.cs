@@ -4,7 +4,7 @@ using RomManager.Configurations;
 
 namespace RomManager.ViewModels;
 
-public partial class SettingsPageViewModel : ObservableObject
+public class SettingsPageViewModel : ObservableObject
 {
     public SettingsPageViewModel(IOptions<PathsConfiguration> pathsOptions)
     {

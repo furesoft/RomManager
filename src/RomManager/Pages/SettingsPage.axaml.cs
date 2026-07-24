@@ -1,10 +1,10 @@
 ﻿using Avalonia.Controls;
-using Design = Avalonia.Controls.Design;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using RomManager.Configurations;
 using RomManager.Hosting;
 using RomManager.ViewModels;
+using Design = Avalonia.Controls.Design;
 
 namespace RomManager.Pages;
 

@@ -1,7 +1,8 @@
 ﻿using RomManager.Models;
 
 namespace RomManager.Systems;
-public class Cps2: SystemInfo
+
+public class Cps2 : SystemInfo
 {
     public override string Name => "Capcom Play System 2";
     public override string Path => "cps1";

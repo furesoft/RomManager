@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Itv: SystemInfo
+public class Itv : SystemInfo
 {
     public override string Name => "Mattel Intellivision";
     public override string Path => "intellivision";

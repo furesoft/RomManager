@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Easyrpg: SystemInfo
+public class Easyrpg : SystemInfo
 {
     public override string Name => "EasyRPG";
     public override string Path => "easyrpg";

@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class IssueWolf: SystemInfo
+public class IssueWolf : SystemInfo
 {
     public override string Name => "Wolfenstein 3D Engine";
     public override string Path => "wolf";

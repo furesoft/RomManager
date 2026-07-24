@@ -2,7 +2,7 @@ using RomManager.Models;
 
 namespace RomManager.Systems;
 
-public class Laserdisc:SystemInfo
+public class Laserdisc : SystemInfo
 {
     public override string Name => "LaserDisc Arcade";
     public override string Path => "daphne";

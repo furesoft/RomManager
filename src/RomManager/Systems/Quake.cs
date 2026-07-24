@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Quake: SystemInfo
+public class Quake : SystemInfo
 {
     public override string Name => "Quake Engine";
     public override string Path => "quake";

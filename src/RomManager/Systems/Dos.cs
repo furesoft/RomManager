@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Dos: SystemInfo
+public class Dos : SystemInfo
 {
     public override string Name => "DOS";
     public override string Path => "dos";

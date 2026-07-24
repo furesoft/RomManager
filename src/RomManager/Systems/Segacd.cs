@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Segacd: SystemInfo
+public class Segacd : SystemInfo
 {
     public override string Name => "Sega CD";
     public override string Path => "segacd";

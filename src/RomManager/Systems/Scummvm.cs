@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Scummvm: SystemInfo
+public class Scummvm : SystemInfo
 {
     public override string Name => "Script Creation Utility for Maniac Mansion Virtual Machine";
     public override string Path => "scummvm";

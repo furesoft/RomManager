@@ -5,19 +5,15 @@ namespace RomManager.Core.RegionDetection;
 
 public class NesHeaderDetector : RegionDetector
 {
-    private static readonly string[] NesExtensions = [".nes"];
-
     private const byte InesMagic0 = 0x4E; // 'N'
     private const byte InesMagic1 = 0x45; // 'E'
     private const byte InesMagic2 = 0x53; // 'S'
     private const byte InesMagic3 = 0x1A; // EOF
+    private static readonly string[] NesExtensions = [".nes"];
 
     public override bool CanDetect(string filePath)
     {
-        if (!base.CanDetect(filePath))
-        {
-            return false;
-        }
+        if (!base.CanDetect(filePath)) return false;
 
         var extension = Path.GetExtension(filePath).ToLower();
         return NesExtensions.Contains(extension);
@@ -29,10 +25,7 @@ public class NesHeaderDetector : RegionDetector
         {
             using (var file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
-                if (file.Length < 16)
-                {
-                    return [];
-                }
+                if (file.Length < 16) return [];
 
                 // Check for iNES header
                 var headerBuffer = new byte[4];
@@ -42,9 +35,7 @@ public class NesHeaderDetector : RegionDetector
                     headerBuffer[1] != InesMagic1 ||
                     headerBuffer[2] != InesMagic2 ||
                     headerBuffer[3] != InesMagic3)
-                {
                     return [];
-                }
 
                 // Read TV system byte (byte 9)
                 file.Seek(9, SeekOrigin.Begin);

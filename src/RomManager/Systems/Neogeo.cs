@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Neogeo: SystemInfo
+public class Neogeo : SystemInfo
 {
     public override string Name => "SNK Neo Geo Pocket Color";
     public override string Path => "ngpc";

@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Sgb: SystemInfo
+public class Sgb : SystemInfo
 {
     public override string Name => "Super Game Boy";
     public override string Path => "sgb";

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Avalonia.Platform.Storage;
 using RomManager.Models;
 
@@ -12,10 +11,7 @@ public class FilenameFilterBuilder(IEnumerable<SystemInfo> systems)
 
     public FilePickerFileType[] GetFilter()
     {
-        if (_filter != null)
-        {
-            return _filter;
-        }
+        if (_filter != null) return _filter;
 
         var filterLines = new List<FilePickerFileType>();
 
@@ -27,10 +23,7 @@ public class FilenameFilterBuilder(IEnumerable<SystemInfo> systems)
         if (allExtensions.Any())
         {
             var allPattern = string.Join(";", allExtensions);
-            filterLines.Add(new FilePickerFileType("All Supported ROMs")
-            {
-                Patterns = allExtensions.ToArray()
-            });
+            filterLines.Add(new FilePickerFileType("All Supported ROMs") { Patterns = allExtensions.ToArray() });
         }
 
         foreach (var system in systems)
@@ -40,10 +33,7 @@ public class FilenameFilterBuilder(IEnumerable<SystemInfo> systems)
 
             var patterns = system.Extensions.Select(EnsureWildcard);
 
-            filterLines.Add(new FilePickerFileType(system.Name)
-            {
-                Patterns = patterns.ToArray()
-            });
+            filterLines.Add(new FilePickerFileType(system.Name) { Patterns = patterns.ToArray() });
         }
 
         _filter = filterLines.ToArray();

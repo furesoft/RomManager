@@ -11,6 +11,7 @@ namespace RomManager.Core;
 public abstract class StartupInitializer : INotifyPropertyChanged
 {
     private string _text = "Loading ...";
+
     public string Text
     {
         get => _text;
@@ -23,8 +24,9 @@ public abstract class StartupInitializer : INotifyPropertyChanged
         }
     }
 
-    public abstract Task InitializeAsync(IProgress<int> progress, CancellationToken cancellationToken);
     public event PropertyChangedEventHandler? PropertyChanged;
+
+    public abstract Task InitializeAsync(IProgress<int> progress, CancellationToken cancellationToken);
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {

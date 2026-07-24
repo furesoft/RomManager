@@ -8,20 +8,23 @@
         <StackPanel Spacing="5">
             <OptionsDisplayItem Header="Paths" IsExpanded="True" Padding="15" Expands="True">
                 <OptionsDisplayItem.ActionButton>
-                    <PathPicker Mode="OpenFolder" SelectedPathsText="{Binding PathsConfiguration.BasePath, Mode=TwoWay}" />
+                    <PathPicker Mode="OpenFolder"
+                                SelectedPathsText="{Binding PathsConfiguration.BasePath, Mode=TwoWay}" />
                 </OptionsDisplayItem.ActionButton>
 
                 <OptionsDisplayItem.Content>
                     <StackPanel Spacing="15">
                         <OptionsDisplayItem Header="Roms Path">
                             <OptionsDisplayItem.ActionButton>
-                                <PathPicker Mode="OpenFolder" SelectedPathsText="{Binding PathsConfiguration.Roms, Mode=TwoWay}" />
+                                <PathPicker Mode="OpenFolder"
+                                            SelectedPathsText="{Binding PathsConfiguration.Roms, Mode=TwoWay}" />
                             </OptionsDisplayItem.ActionButton>
                         </OptionsDisplayItem>
 
                         <OptionsDisplayItem Header="SaveGame Path">
                             <OptionsDisplayItem.ActionButton>
-                                <PathPicker Mode="OpenFolder" SelectedPathsText="{Binding PathsConfiguration.SaveGames, Mode=TwoWay}" />
+                                <PathPicker Mode="OpenFolder"
+                                            SelectedPathsText="{Binding PathsConfiguration.SaveGames, Mode=TwoWay}" />
                             </OptionsDisplayItem.ActionButton>
                         </OptionsDisplayItem>
                     </StackPanel>

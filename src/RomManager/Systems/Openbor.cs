@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Openbor: SystemInfo
+public class Openbor : SystemInfo
 {
     public override string Name => "Open Beats of Rage";
     public override string Path => "openbor";

@@ -2,7 +2,7 @@ using RomManager.Models;
 
 namespace RomManager.Systems;
 
-public class Snes: SystemInfo
+public class Snes : SystemInfo
 {
     public override string Name => "Super Nintendo Entertainment System";
     public override string Path => "snes";

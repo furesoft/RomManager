@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Ws: SystemInfo
+public class Ws : SystemInfo
 {
     public override string Name => "Bandai WonderSwan";
     public override string Path => "ws";

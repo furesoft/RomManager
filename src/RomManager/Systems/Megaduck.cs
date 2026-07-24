@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Megaduck: SystemInfo
+public class Megaduck : SystemInfo
 {
     public override string Name => "Megaduck Cougar Boy";
     public override string Path => "megaduck";

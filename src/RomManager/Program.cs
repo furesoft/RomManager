@@ -25,21 +25,22 @@ internal sealed class Program
         }
 
         if (!Design.IsDesignMode)
-        {
             VelopackApp
                 .Build()
                 .Run();
-        }
 
         BuildAvaloniaApp(args)
             .StartWithClassicDesktopLifetime(args);
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.
-    public static AppBuilder BuildAvaloniaApp(string[]? args = null) => AppBuilder
-        .Configure<App>()
-        .UseMicrosoftHosting(args ?? [])
-        .UsePlatformDetect()
-        .WithInterFont()
-        .LogToTrace();
+    public static AppBuilder BuildAvaloniaApp(string[]? args = null)
+    {
+        return AppBuilder
+            .Configure<App>()
+            .UseMicrosoftHosting(args ?? [])
+            .UsePlatformDetect()
+            .WithInterFont()
+            .LogToTrace();
+    }
 }

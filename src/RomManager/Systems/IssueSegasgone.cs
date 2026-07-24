@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class IssueSegasgone: SystemInfo
+public class IssueSegasgone : SystemInfo
 {
     public override string Name => "Sega Computer Videogame SG-1000";
     public override string Path => "segasgone";

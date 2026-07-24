@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,26 +15,20 @@ public abstract class RegionDetector : IRegionDetector
 
     public virtual Region[] Detect(string filePath)
     {
-        if (!CanDetect(filePath))
-        {
-            return [];
-        }
+        if (!CanDetect(filePath)) return [];
 
         // Try system-specific detection first (implemented by subclasses)
         var systemSpecificRegions = DetectSystemSpecific(filePath);
-        if (systemSpecificRegions.Length > 0)
-        {
-            return systemSpecificRegions;
-        }
+        if (systemSpecificRegions.Length > 0) return systemSpecificRegions;
 
         // Fallback to filename pattern detection
         return _filenameDetector.Detect(filePath);
     }
 
     /// <summary>
-    /// System-specific region detection (e.g., from ROM header).
-    /// Override this in subclasses for specific systems.
-    /// Returns empty array if not detected via this method.
+    ///     System-specific region detection (e.g., from ROM header).
+    ///     Override this in subclasses for specific systems.
+    ///     Returns empty array if not detected via this method.
     /// </summary>
     protected virtual Region[] DetectSystemSpecific(string filePath)
     {
@@ -46,15 +39,9 @@ public abstract class RegionDetector : IRegionDetector
     {
         var merged = new HashSet<Region>();
         foreach (var regions in regionArrays)
-        {
-            foreach (var region in regions)
-            {
-                if (region != Region.Unknown)
-                {
-                    merged.Add(region);
-                }
-            }
-        }
+        foreach (var region in regions)
+            if (region != Region.Unknown)
+                merged.Add(region);
 
         return merged.Any() ? merged.OrderBy(r => r).ToArray() : [Region.Unknown];
     }

@@ -11,20 +11,15 @@ namespace RomManager.Models;
 [XmlRoot("gameList")]
 public class GameList
 {
-    [XmlElement("game")]
-    public List<GameInfo> Games { get; set; } = [];
+    [XmlElement("game")] public List<GameInfo> Games { get; set; } = [];
 
-    [XmlIgnore]
-    public Dictionary<string, GameInfo> GamesByFilename { get; set; } = new();
+    [XmlIgnore] public Dictionary<string, GameInfo> GamesByFilename { get; set; } = new();
 
     public static GameList ReadFromFile(SystemInfo system)
     {
         var path = GetPath(system);
 
-        if (!File.Exists(path))
-        {
-            return new();
-        }
+        if (!File.Exists(path)) return new GameList();
 
         var serializer = new XmlSerializer(typeof(GameList));
         using var reader = new StreamReader(path);

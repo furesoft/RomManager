@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class SatellaView: SystemInfo
+public class SatellaView : SystemInfo
 {
     public override string Name => "Satellaview";
     public override string Path => "satella";

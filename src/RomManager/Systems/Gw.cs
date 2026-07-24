@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Gw: SystemInfo
+public class Gw : SystemInfo
 {
     public override string Name => "Nintendo Game & Watch";
     public override string Path => "gw";

@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Supervision: SystemInfo
+public class Supervision : SystemInfo
 {
     public override string Name => "Watara Supervision";
     public override string Path => "supervision";

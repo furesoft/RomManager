@@ -13,6 +13,7 @@ namespace RomManager.Converters;
 public sealed class RegionToImageConverter : IValueConverter
 {
     private static readonly ConcurrentDictionary<Region, IImage?> IconCache = new();
+
     private static readonly Dictionary<Region, string> RegionToIcon = new()
     {
         { Region.USA, "usa" },
@@ -21,25 +22,19 @@ public sealed class RegionToImageConverter : IValueConverter
         { Region.Japan, "jp" },
         { Region.Korea, "kr" },
         { Region.Brazil, "br" },
-        { Region.Unknown, "other" },
+        { Region.Unknown, "other" }
     };
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is not Region region)
-        {
-            return null;
-        }
+        if (value is not Region region) return null;
 
         return IconCache.GetOrAdd(region, static region =>
         {
             var iconName = RegionToIcon[region];
             var uri = new Uri($"avares://RomManager/Assets/Icons/Regions/{iconName}.png");
 
-            if (!AssetLoader.Exists(uri))
-            {
-                return null;
-            }
+            if (!AssetLoader.Exists(uri)) return null;
 
             using var stream = AssetLoader.Open(uri);
             return new Bitmap(stream);

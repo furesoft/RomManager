@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Gc: SystemInfo
+public class Gc : SystemInfo
 {
     public override string Name => "Sega Game Gear";
     public override string Path => "gg";

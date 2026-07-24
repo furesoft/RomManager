@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Ftplay: SystemInfo
+public class Ftplay : SystemInfo
 {
     public override string Name => "FTPlay";
     public override string Path => "ftplay";

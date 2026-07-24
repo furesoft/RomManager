@@ -13,16 +13,10 @@ public class UpdateInitializer : StartupInitializer
         Text = "Checking for updates...";
         var mgr = new UpdateManager(new GithubSource("https://github.com/furesoft/RomManager", null, false));
 
-        if (!mgr.IsInstalled)
-        {
-            return;
-        }
+        if (!mgr.IsInstalled) return;
 
         var newVersion = await mgr.CheckForUpdatesAsync();
-        if (newVersion == null)
-        {
-            return;
-        }
+        if (newVersion == null) return;
 
         await mgr.DownloadUpdatesAsync(newVersion, progress.Report, cancellationToken);
 

@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Odyssey2: SystemInfo
+public class Odyssey2 : SystemInfo
 {
     public override string Name => "Magnavox Odyssey";
     public override string Path => "ody";

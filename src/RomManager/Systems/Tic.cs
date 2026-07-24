@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Tic: SystemInfo
+public class Tic : SystemInfo
 {
     public override string Name => "TIC-80 Virtual Computer";
     public override string Path => "tic";

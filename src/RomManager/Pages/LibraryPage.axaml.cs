@@ -10,6 +10,7 @@ public partial class LibraryPage : UserControl
     public LibraryPage() : this(AppHost.Services.GetRequiredService<LibraryPageViewModel>())
     {
     }
+
     public LibraryPage(LibraryPageViewModel viewModel)
     {
         InitializeComponent();

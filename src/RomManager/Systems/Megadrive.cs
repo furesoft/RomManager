@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Megadrive: SystemInfo
+public class Megadrive : SystemInfo
 {
     public override string Name => "Sega Mega Drive";
     public override string Path => "megadrive";

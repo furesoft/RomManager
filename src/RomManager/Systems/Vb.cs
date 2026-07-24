@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Vb: SystemInfo
+public class Vb : SystemInfo
 {
     public override string Name => "Virtual Boy";
     public override string Path => "vb";

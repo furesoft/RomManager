@@ -12,15 +12,15 @@ public class FilterSelector : ItemsControl
     public static readonly StyledProperty<IList?> SelectedItemsProperty =
         AvaloniaProperty.Register<FilterSelector, IList?>(nameof(SelectedItems));
 
+    public FilterSelector()
+    {
+        AddHandler(Button.ClickEvent, OnAnyButtonClicked, RoutingStrategies.Bubble);
+    }
+
     public IList? SelectedItems
     {
         get => GetValue(SelectedItemsProperty);
         set => SetValue(SelectedItemsProperty, value);
-    }
-
-    public FilterSelector()
-    {
-        AddHandler(Button.ClickEvent, OnAnyButtonClicked, RoutingStrategies.Bubble);
     }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
@@ -32,10 +32,7 @@ public class FilterSelector : ItemsControl
 
         addBtn?.Click += (s, args) =>
         {
-            if (comboBox?.SelectedItem is null)
-            {
-                return;
-            }
+            if (comboBox?.SelectedItem is null) return;
 
             var selectedItems = SelectedItems;
             if (selectedItems is null)
@@ -45,9 +42,7 @@ public class FilterSelector : ItemsControl
             }
 
             if (comboBox?.SelectedItem is not null && !selectedItems.Contains(comboBox.SelectedItem))
-            {
                 selectedItems.Add(comboBox.SelectedItem);
-            }
 
             comboBox?.SelectedItem = null;
         };
@@ -55,17 +50,11 @@ public class FilterSelector : ItemsControl
 
     private void OnAnyButtonClicked(object? sender, RoutedEventArgs e)
     {
-        if (e.Source is not Button button || button.Name == "PART_AddButton")
-        {
-            return;
-        }
+        if (e.Source is not Button button || button.Name == "PART_AddButton") return;
 
         var selectedItems = SelectedItems;
         var item = button.Tag ?? button.DataContext;
-        if (selectedItems is null || item is null || !selectedItems.Contains(item))
-        {
-            return;
-        }
+        if (selectedItems is null || item is null || !selectedItems.Contains(item)) return;
 
         selectedItems.Remove(item);
         e.Handled = true;

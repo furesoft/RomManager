@@ -15,7 +15,7 @@ using RomManager.Hosting;
 
 namespace RomManager;
 
-public partial class App : Application
+public class App : Application
 {
     private const string ApplicationName = "Rom Manager";
     private static int _isCrashDialogShown;
@@ -90,10 +90,7 @@ public partial class App : Application
 
     private static async Task ShowCrashDialogAsync(Exception exception)
     {
-        if (Interlocked.CompareExchange(ref _isCrashDialogShown, 1, 0) != 0)
-        {
-            return;
-        }
+        if (Interlocked.CompareExchange(ref _isCrashDialogShown, 1, 0) != 0) return;
 
         Window? fallbackWindow = null;
         try
@@ -117,13 +114,9 @@ public partial class App : Application
 
             var dialog = CrashReportDialog.FromException(exception, ApplicationName, ResolveAppVersion());
             if (hostWindow is IPleasantWindow pleasantWindow)
-            {
                 await dialog.ShowAsync(pleasantWindow);
-            }
             else
-            {
                 await dialog.ShowAsync(hostWindow);
-            }
         }
         finally
         {
@@ -135,11 +128,9 @@ public partial class App : Application
     private static string ResolveAppVersion()
     {
         var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
-        var informationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
-        if (!string.IsNullOrWhiteSpace(informationalVersion))
-        {
-            return informationalVersion;
-        }
+        var informationalVersion =
+            assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+        if (!string.IsNullOrWhiteSpace(informationalVersion)) return informationalVersion;
 
         return assembly.GetName().Version?.ToString(3) ?? "Unbekannt";
     }

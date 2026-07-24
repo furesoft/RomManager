@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Pcengine: SystemInfo
+public class Pcengine : SystemInfo
 {
     public override string Name => "PC Engine";
     public override string Path => "pcengine";

@@ -2,7 +2,7 @@
 
 namespace RomManager.Systems;
 
-public class Fds: SystemInfo
+public class Fds : SystemInfo
 {
     public override string Name => "Famicom Disk System";
     public override string Path => "fds";
