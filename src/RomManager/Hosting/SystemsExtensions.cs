@@ -155,7 +155,6 @@ public static partial class AppBuilderHostingExtensions
         hostBuilder.Services.AddTransient<SystemInfo, Wasm4>();
         hostBuilder.Services.AddTransient<SystemInfo, Wii>();
         hostBuilder.Services.AddTransient<SystemInfo, Wiiu>();
-        hostBuilder.Services.AddTransient<SystemInfo, Windows>();
         hostBuilder.Services.AddTransient<SystemInfo, Windows3x>();
         hostBuilder.Services.AddTransient<SystemInfo, Windows9x>();
         hostBuilder.Services.AddTransient<SystemInfo, Wonderswan>();
