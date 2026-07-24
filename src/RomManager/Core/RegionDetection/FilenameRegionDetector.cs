@@ -15,7 +15,8 @@ public class FilenameRegionDetector : IRegionDetector
         { Region.Europe, ["\\[E\\]", "\\(E\\)", "\\(Europe\\)", "\\(EUR\\)"] },
         { Region.Korea, ["\\[K\\]", "\\(K\\)", "\\(Korea\\)", "\\(KOR\\)"] },
         { Region.Australia, ["\\[A\\]", "\\(A\\)", "\\(Australia\\)", "\\(AUS\\)"] },
-        { Region.Brazil, ["\\(Brazil\\)", "\\(BR\\)"] }
+        { Region.Brazil, ["\\(Brazil\\)", "\\(BR\\)"] },
+        { Region.Russia, ["\\(Russia\\)", "\\(RU\\)", "\\(RUS\\)", "\\[RU\\]", "\\[RUS\\]"] }
     };
 
     // World/International patterns (indicates multi-region)

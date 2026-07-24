@@ -22,6 +22,7 @@ public sealed class RegionToImageConverter : IValueConverter
         { Region.Japan, "jp" },
         { Region.Korea, "kr" },
         { Region.Brazil, "br" },
+        { Region.Russia, "rus" },
         { Region.Unknown, "other" }
     };
 

@@ -8,5 +8,6 @@ public enum Region
     Europe,
     Korea,
     Australia,
-    Brazil
+    Brazil,
+    Russia
 }
