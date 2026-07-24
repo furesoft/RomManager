@@ -11,7 +11,8 @@ public class RomManager
 {
     public RomManager(IEnumerable<SystemInfo> systems, IOptions<PathsConfiguration> pathsConfiguration)
     {
-        Systems = systems;
+        AllSystems = systems;
+        Systems = AllSystems.Where(system => system.HasGames(pathsConfiguration.Value)).ToList();
 
         Games = Systems.SelectMany(system =>
         {
@@ -25,6 +26,7 @@ public class RomManager
     }
 
     public IEnumerable<SystemInfo> Systems { get; }
+    public IEnumerable<SystemInfo> AllSystems { get; }
 
     public IReadOnlyList<Game> Games { get; }
 }

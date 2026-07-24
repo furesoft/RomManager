@@ -16,7 +16,7 @@
         <converters:FilterComboBoxItemToTextConverter x:Key="FilterComboBoxItemToTextConverter" />
     </UserControl.Resources>
 
-    <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="8">
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="8">
         <CommandBar DefaultLabelPosition="Bottom"
                     IsOpen="False"
                     IsSticky="True"
@@ -103,120 +103,105 @@
             <TextBlock Text="{Binding FilteredGamesCount, Mode=OneWay, StringFormat='{}{0} Games'}" />
         </UniformGrid>
 
-        <ScrollViewer Grid.Row="2"
-                      VerticalScrollBarVisibility="Auto"
-                      HorizontalScrollBarVisibility="Disabled">
-            <ItemsRepeater ItemsSource="{Binding PagedGames}">
-                <ItemsRepeater.Layout>
-                    <UniformGridLayout MinItemWidth="120"
-                                       MinColumnSpacing="12"
-                                       MinRowSpacing="12"
-                                       ItemsJustification="Start" />
-                </ItemsRepeater.Layout>
+        <controls:TileItemsView Grid.Row="2"
+                                ItemsSource="{Binding PagedGames}"
+                                MinItemWidth="120"
+                                MinColumnSpacing="12"
+                                MinRowSpacing="12"
+                                FirstPageCommand="{Binding FirstPageCommand}"
+                                PreviousPageCommand="{Binding PreviousPageCommand}"
+                                NextPageCommand="{Binding NextPageCommand}"
+                                LastPageCommand="{Binding LastPageCommand}"
+                                HasPreviousPage="{Binding HasPreviousPage}"
+                                HasNextPage="{Binding HasNextPage}"
+                                PageInfo="{Binding PageInfo}">
+            <controls:TileItemsView.ItemTemplate>
+                <DataTemplate x:DataType="models:Game">
+                    <Border Width="130"
+                            Padding="6"
+                            CornerRadius="8"
+                            Background="Transparent"
+                            ClipToBounds="True">
 
-                <ItemsRepeater.ItemTemplate>
-                    <DataTemplate x:DataType="models:Game">
-                        <Border Width="130"
-                                Padding="6"
-                                CornerRadius="8"
-                                Background="Transparent"
-                                ClipToBounds="True">
+                        <Grid RowDefinitions="Auto, Auto, Auto">
+                            <Grid Grid.Row="0" Width="110" Height="150" HorizontalAlignment="Center">
+                                <Border CornerRadius="6"
+                                        ClipToBounds="True"
+                                        Background="#202020"
+                                        BoxShadow="0 4 8 0 #50000000">
+                                    <Image Source="{Binding CoverArt, Mode=OneWay}"
+                                           Stretch="UniformToFill" />
+                                </Border>
 
-                            <Grid RowDefinitions="Auto, Auto, Auto">
-                                <Grid Grid.Row="0" Width="110" Height="150" HorizontalAlignment="Center">
-                                    <Border CornerRadius="6"
-                                            ClipToBounds="True"
-                                            Background="#202020"
-                                            BoxShadow="0 4 8 0 #50000000">
-                                        <Image Source="{Binding CoverArt, Mode=OneWay}"
-                                               Stretch="UniformToFill" />
-                                    </Border>
+                                <ItemsControl ItemsSource="{Binding Systems}"
+                                              HorizontalAlignment="Right"
+                                              VerticalAlignment="Top"
+                                              Margin="4">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" Spacing="4" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
 
-                                    <ItemsControl ItemsSource="{Binding Systems}"
-                                                  HorizontalAlignment="Right"
-                                                  VerticalAlignment="Top"
-                                                  Margin="4">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal" Spacing="4" />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="models:SystemInfo">
+                                            <Border Background="#B31A1A1A"
+                                                    CornerRadius="4"
+                                                    Padding="4"
+                                                    BoxShadow="0 2 4 0 #30000000">
+                                                <Image
+                                                    Source="{Binding Converter={StaticResource SystemIconNameToImageConverter}}"
+                                                    Width="18" HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Height="18"
+                                                    ToolTip.Tip="{Binding Name}" />
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
 
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate x:DataType="models:SystemInfo">
-                                                <Border Background="#B31A1A1A"
-                                                        CornerRadius="4"
-                                                        Padding="4"
-                                                        BoxShadow="0 2 4 0 #30000000">
-                                                    <Image
-                                                        Source="{Binding Converter={StaticResource SystemIconNameToImageConverter}}"
-                                                        Width="18" HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Height="18"
-                                                        ToolTip.Tip="{Binding Name}" />
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
+                                <ItemsControl ItemsSource="{Binding Regions}"
+                                              HorizontalAlignment="Left"
+                                              VerticalAlignment="Top"
+                                              Margin="4">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" Spacing="4" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
 
-                                    <ItemsControl ItemsSource="{Binding Regions}"
-                                                  HorizontalAlignment="Left"
-                                                  VerticalAlignment="Top"
-                                                  Margin="4">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal" Spacing="4" />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate x:DataType="regionDetection:Region">
-                                                <Border Background="#B31A1A1A"
-                                                        CornerRadius="4"
-                                                        Padding="4"
-                                                        BoxShadow="0 2 4 0 #30000000">
-                                                    <Image
-                                                        Source="{Binding Converter={StaticResource RegionToImageConverter}}"
-                                                        Width="18" HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Height="18"
-                                                        ToolTip.Tip="{Binding }" />
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </Grid>
-
-                                <TextBlock Grid.Row="2"
-                                           Text="{Binding Name}"
-                                           FontSize="12"
-                                           FontWeight="SemiBold"
-                                           Foreground="#E0E0E0"
-                                           HorizontalAlignment="Center"
-                                           TextAlignment="Center"
-                                           TextWrapping="Wrap"
-                                           MaxLines="2"
-                                           Margin="0,6,0,0" />
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="regionDetection:Region">
+                                            <Border Background="#B31A1A1A"
+                                                    CornerRadius="4"
+                                                    Padding="4"
+                                                    BoxShadow="0 2 4 0 #30000000">
+                                                <Image
+                                                    Source="{Binding Converter={StaticResource RegionToImageConverter}}"
+                                                    Width="18" HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Height="18"
+                                                    ToolTip.Tip="{Binding }" />
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ItemsRepeater.ItemTemplate>
-            </ItemsRepeater>
-        </ScrollViewer>
 
-        <StackPanel Grid.Row="3"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Spacing="8"
-                    Margin="0,4,0,0">
-            <Button Content="&lt;&lt;" Command="{Binding FirstPageCommand}" IsEnabled="{Binding HasPreviousPage}" />
-            <Button Content="&lt;" Command="{Binding PreviousPageCommand}" IsEnabled="{Binding HasPreviousPage}" />
-            <TextBlock Text="{Binding PageInfo}"
-                       VerticalAlignment="Center"
-                       Margin="8,0" />
-            <Button Content="&gt;" Command="{Binding NextPageCommand}" IsEnabled="{Binding HasNextPage}" />
-            <Button Content="&gt;&gt;" Command="{Binding LastPageCommand}" IsEnabled="{Binding HasNextPage}" />
-        </StackPanel>
+                            <TextBlock Grid.Row="2"
+                                       Text="{Binding Name}"
+                                       FontSize="12"
+                                       FontWeight="SemiBold"
+                                       Foreground="#E0E0E0"
+                                       HorizontalAlignment="Center"
+                                       TextAlignment="Center"
+                                       TextWrapping="Wrap"
+                                       MaxLines="2"
+                                       Margin="0,6,0,0" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </controls:TileItemsView.ItemTemplate>
+        </controls:TileItemsView>
     </Grid>
 </UserControl>

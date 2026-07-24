@@ -8,5 +8,6 @@
         <PleasantTheme />
 
         <StyleInclude Source="/Controls/FilterSelector.axaml" />
+        <StyleInclude Source="/Controls/TileItemsView.axaml" />
     </Application.Styles>
 </Application>

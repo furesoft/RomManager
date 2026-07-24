@@ -1,0 +1,53 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:RomManager.Controls">
+    <Design.PreviewWith>
+        <controls:TileItemsView />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|TileItemsView">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid RowDefinitions="*,Auto" RowSpacing="4">
+                    <ScrollViewer Grid.Row="0"
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled">
+                        <ItemsRepeater ItemsSource="{TemplateBinding ItemsSource}"
+                                       ItemTemplate="{TemplateBinding ItemTemplate}">
+                            <ItemsRepeater.Layout>
+                                <UniformGridLayout MinItemWidth="{TemplateBinding MinItemWidth}"
+                                                   MinColumnSpacing="{TemplateBinding MinColumnSpacing}"
+                                                   MinRowSpacing="{TemplateBinding MinRowSpacing}"
+                                                   ItemsJustification="Start" />
+                            </ItemsRepeater.Layout>
+                        </ItemsRepeater>
+                    </ScrollViewer>
+
+                    <StackPanel Grid.Row="1"
+                                IsVisible="{TemplateBinding IsPaginationVisible}"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Spacing="8"
+                                Margin="0,4,0,0">
+                        <Button Content="&lt;&lt;"
+                                Command="{TemplateBinding FirstPageCommand}"
+                                IsEnabled="{TemplateBinding HasPreviousPage}" />
+                        <Button Content="&lt;"
+                                Command="{TemplateBinding PreviousPageCommand}"
+                                IsEnabled="{TemplateBinding HasPreviousPage}" />
+                        <TextBlock Text="{TemplateBinding PageInfo}"
+                                   VerticalAlignment="Center"
+                                   Margin="8,0" />
+                        <Button Content="&gt;"
+                                Command="{TemplateBinding NextPageCommand}"
+                                IsEnabled="{TemplateBinding HasNextPage}" />
+                        <Button Content="&gt;&gt;"
+                                Command="{TemplateBinding LastPageCommand}"
+                                IsEnabled="{TemplateBinding HasNextPage}" />
+                    </StackPanel>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
