@@ -5,7 +5,7 @@ using RomManager.Models;
 
 namespace RomManager.Core;
 
-public class FilenameFilterBuilder(IEnumerable<SystemInfo> systems)
+public class FilenameFilterBuilder(RomManager romManager)
 {
     private FilePickerFileType[]? _filter;
 
@@ -15,18 +15,17 @@ public class FilenameFilterBuilder(IEnumerable<SystemInfo> systems)
 
         var filterLines = new List<FilePickerFileType>();
 
-        var allExtensions = systems
+        var allExtensions = romManager.Systems
             .SelectMany(s => s.Extensions)
             .Select(EnsureWildcard)
             .Distinct();
 
         if (allExtensions.Any())
         {
-            var allPattern = string.Join(";", allExtensions);
             filterLines.Add(new FilePickerFileType("All Supported ROMs") { Patterns = allExtensions.ToArray() });
         }
 
-        foreach (var system in systems)
+        foreach (var system in romManager.Systems)
         {
             if (!system.Extensions.Any())
                 continue;
