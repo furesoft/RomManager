@@ -19,7 +19,7 @@
                 </NavigationViewItem.Content>
             </NavigationViewItem>
 
-            <NavigationViewItem Header="Library" Margin="0,0,0,5"
+            <NavigationViewItem x:Name="LibraryNavigationItem" Header="Library" Margin="0,0,0,5" IsExpanded="True"
                                 Icon="{x:Static MaterialIcons.Library}">
                 <NavigationViewItem.Content>
                     <pages:LibraryPage />

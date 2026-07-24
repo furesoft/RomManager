@@ -31,6 +31,7 @@ public static partial class AppBuilderHostingExtensions
         hostBuilder.Services.AddTransient<SettingsPageViewModel>();
 
         hostBuilder.Services.AddSingleton<Core.RomManager>();
+        hostBuilder.Services.AddSingleton<CollectionCatalog>();
         hostBuilder.Services.AddSingleton<FilenameFilterBuilder>();
 
         AddSystemInfos(hostBuilder);

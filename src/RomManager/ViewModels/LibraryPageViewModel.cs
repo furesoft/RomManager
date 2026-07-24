@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -21,6 +22,8 @@ public partial class LibraryPageViewModel : ObservableObject
 {
     private readonly FilenameFilterBuilder _filenameFilterBuilder;
     private readonly INotifyCollectionChanged? _gamesCollectionNotifier;
+    private HashSet<Game>? _collectionGames;
+    [ObservableProperty] private string? _collectionName;
     [ObservableProperty] private int _currentPage = 1;
     [ObservableProperty] private bool _favoritesOnly;
     [ObservableProperty] private int _filteredGamesCount;
@@ -87,6 +90,8 @@ public partial class LibraryPageViewModel : ObservableObject
     {
         if (obj is not Game game) return false;
 
+        if (_collectionGames is not null && !_collectionGames.Contains(game)) return false;
+
         var activeSystems = SelectedSystems?.Where(s => s is not null).ToArray();
         if (activeSystems is { Length: > 0 } && game.Systems.All(s => !activeSystems.Contains(s))) return false;
 
@@ -106,6 +111,13 @@ public partial class LibraryPageViewModel : ObservableObject
         if (FavoritesOnly && game.Info?.IsFavorite != true) return false;
 
         return true;
+    }
+
+    public void SetCollectionFilter(string? collectionName, IEnumerable<Game>? collectionGames)
+    {
+        CollectionName = collectionName;
+        _collectionGames = collectionGames is null ? null : [..collectionGames];
+        RefreshPagedGames(true);
     }
 
     partial void OnFavoritesOnlyChanged(bool value)
